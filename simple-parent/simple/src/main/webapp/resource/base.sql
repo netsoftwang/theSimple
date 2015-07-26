@@ -85,24 +85,11 @@ create table `role`(
 	primary key (id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
-/*定制表的表名称*/
-drop table if exists seeds.tables;
-create table 'tables'(
-	`id` bigint unsigned not null auto_increment comment '主键',
-	`entId` bigint unsigned not null comment '企业id',
-	`tableName` varchar(64) commment '表名称',
-	`tableNameZh` varchar(64) comment '表中文名称',
-	`type` tinyint comment '表类型值,0为普通表，1为树类型表',
-	`status` tinyint comment '状态值,0再用,1冻结',
-	`associate` varchar(64) comment '关联存储表名称',
-	primary key (id)
-)ENGIN=INNODB DEFAULT CHARSET=UTF-8 auto_increment=1;
 
-
-drop table if exists seeds.treeNodeCusField
-crate table 'treeNodeCusField'(
-	`id` bigint not unsigned not null auto_increment '主键',
-	`entId` bigint unsigned not null comment '企业id',
+drop table if exists seeds.treeNodeCusField;
+create table `treeNodeCusField`(
+`id` bigint unsigned not null auto_increment comment '主键',
+	`entId` BIGINT unsigned not null 	comment '企业id',
 	`name` VARCHAR(32) NOT NULL COMMENT '字段在列中显示的中文名称',
 	`field` VARCHAR(32) NOT NULL COMMENT '在数据库中保存的字段名称',
 	`type` VARCHAR (32) NOT NULL DEFAULT 'strType' COMMENT '字段类型',
@@ -113,8 +100,21 @@ crate table 'treeNodeCusField'(
 	`action` VARCHAR(64) DEFAULT '' COMMENT '权限控制代码',
 	`createTime` int DEFAULT 0 COMMENT '创建时间',
 	primary key (id)
-)ENGIN=INNODB DEFAULT=UTF-8 auto_increment=1;
+)ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
+
+/*定制表的表名称*/
+drop table if exists seeds.tables;
+create table `tables`(
+	`id` bigint unsigned not null auto_increment comment '主键',
+	`entId` bigint unsigned not null comment '企业id',
+	`tableName` varchar(64) comment '表名称',
+	`tableNameZh` varchar(64) comment '表中文名称',
+	`type` tinyint comment '表类型值,0为普通表，1为树类型表',
+	`status` tinyint comment '状态值,0再用,1冻结',
+	`associate` varchar(64) comment '关联存储表名称',
+	primary key (id)
+)ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
 
 
