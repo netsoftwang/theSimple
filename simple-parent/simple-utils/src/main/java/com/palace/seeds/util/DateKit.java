@@ -35,4 +35,8 @@ public class DateKit {
 			c.set(Calendar.SECOND, sec);
 		return c.getTimeInMillis();
 	}
+	
+	public static long getCurrent(){
+		return System.currentTimeMillis()/1000;
+	}
 }

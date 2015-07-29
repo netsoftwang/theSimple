@@ -20,4 +20,13 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>/WEB-INF/classes/spring/spring-context.xml</param-value>
   </context-param>
+  <filter>
+    <display-name>LogonFilter</display-name>
+    <filter-name>LogonFilter</filter-name>
+    <filter-class>com.palace.seeds.LogonFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LogonFilter</filter-name>
+    <url-pattern>/LogonFilter</url-pattern>
+  </filter-mapping>
 </web-app>

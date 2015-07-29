@@ -116,5 +116,17 @@ create table `tables`(
 	primary key (id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
-
-
+/*mysql测试*/
+drop table if exists seeds.recordMsg;
+create table `recordMsg`(
+`id` bigint unsigned not null auto_increment comment '主键',
+`uuid` varchar(32) comment 'uuid',
+`age` bigint,
+`count` BIGINT,
+`add` varchar(32),
+`text` varchar(1024) comment 'text',
+`msg` varchar(1024) comment '文本信息',
+`createTime` int comment'创建时间',
+`updateTime` int comment '更新时间',
+PRIMARY key (id)
+)engine=innodb default charset=utf8 auto_increment=1;
