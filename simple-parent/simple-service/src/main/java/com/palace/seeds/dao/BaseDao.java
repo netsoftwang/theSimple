@@ -132,10 +132,12 @@ public class BaseDao implements IBaseDao{
 	}
 	
 	private void showSql(String sql,Object...args){
-		for(int i=0;i<args.length;i++){
-			sql=sql+"**para"+i+":"+args[i];
+		if(args!=null){
+			for(int i=0;i<args.length;i++){
+				sql=sql+":::::para"+i+"="+args[i];
+			}
+			System.out.println(sql);
 		}
-		System.out.println(sql);
 	}
 
 	//根据map中的参数名称和值生成插入语句

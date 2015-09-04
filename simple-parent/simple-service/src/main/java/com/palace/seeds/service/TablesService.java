@@ -25,10 +25,10 @@ public class TablesService extends BaseService{
 		}
 	}
 	
-/*	public Map<String,Object> getPage(Map<String,Object> params){
-		return getPage(tablesDao.queryForLong("select count(1) from tables where ") , 
-				
-				tablesDao.queryForListMap("select * from tables where entId=", null));
+	public Map<String,Object> getPage(Map<String,Object> params){
+		//这里应该有权限控制，管理员权限，企业权限和用户权限
+		return getPage(tablesDao.queryForLong("select count(1) from tables ") , 
+				tablesDao.queryForListMap("select * from tables ", null));
 	}
 	
 	public  String getOrderBy(Map<String,Object> map){
@@ -38,7 +38,7 @@ public class TablesService extends BaseService{
 		}else{
 			return "";
 		}
-	}*/
+	}
 	
 	
 	//我们约定查询条件都以

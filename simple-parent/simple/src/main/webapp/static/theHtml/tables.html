@@ -1,0 +1,141 @@
+<html>
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="../css/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../css/icon.css">
+	<link rel="stylesheet" type="text/css" href="../css/seeds.css">
+	<script type="text/javascript" src="../js/jquery.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+</head>
+
+<style type="text/css">
+
+	.inputWL{
+		width:125px;
+		align:right
+	}
+	.inputWR{
+		width:125px;
+		align:right;
+		padding-left:20px;
+		padding-right:20px;
+	}
+	.inputAlignL{
+		 margin-left:20px;
+		 margin-right:20px;
+		 padding-left:20px;
+		 padding-right:20px;
+		 display:inline
+	}
+	
+	.inputAlignR{
+		margin-left:20px;
+		margin-right:20px;
+		display:inline
+	}
+
+</style>
+<script type="text/javascript">
+	$(function(){
+		$("#tablesId").datagrid({
+			url:"../../tables/getTablesPage",
+			pagination:true,
+			nowrap:true,
+			fitColumns:true,
+			 
+			pageNumber:0,
+			toolbar: [{
+				iconCls: 'icon-add',
+				handler:"add"
+			},'-',{
+				iconCls: 'icon-edit',
+				handler:"edit"
+			},'-',{
+				iconCls: 'icon-remove',
+				handler:"remove"
+			},'-',{
+				iconCls: 'icon-remove',
+				handler:'showTableFields'
+			}],
+			 columns:[[
+			           {field:'entId',title:'企业id',width:100},
+			           {field:'tableNameZh',title:'表中文名称',width:100},
+			           {field:'tableName',title:'表名称',width:100},
+			           {field:'type',title:'表类型',width:100},
+			           {field:'status',title:'状态',width:100},
+			           {field:'associate',title:'在列表中顺序',width:100}
+			       ]]
+		})
+	});
+	
+	function add(){
+		 
+	}
+	function edit(){
+		
+	}
+	function remove(){
+		
+	}
+	
+	
+	function showTableFields(ctx,serial){
+		ctx="";
+		$("#dlg").dialog("open");
+		var data = $("#tablesId").datagrid("getSelected");
+		$("#cusFieldTableId").datagrid({
+			url:"../../cusField/getCusFieldPage",
+			pagination:true,
+			nowrap:true,
+			fitColumns:true,
+			pageNumber:0,
+			toolbar: [{
+				iconCls: 'icon-add',
+				handler:"add"
+			},'-',{
+				iconCls: 'icon-edit',
+				handler:"edit"
+			},'-',{
+				iconCls: 'icon-remove',
+				handler:"remove"
+			}],
+			 columns:[[
+			           {field:'entId',title:'企业id',width:100},
+			           {field:'name',title:'字段显示名称',width:100},
+			           {field:'field',title:'字段名',width:100},
+			           {field:'type',title:'字段类型',width:100},
+			           {field:'tableName',title:'表名称',width:100},
+			           {field:'viewNum',title:'在列表中顺序',width:100},
+			           {field:'status',title:'状态',width:100},
+			           {field:'isShow',title:'是否在列表中显示',width:100},
+			           {field:'width',title:'在列表张宽度',width:100},
+			           {field:'isUse',title:'是否再用',width:100},
+			           {field:'isSearch',title:'是否用于搜索',width:100},
+			           {field:'searchGroupId',title:'所属搜索组',width:100}
+			      /*      {field:'isMutiValSerch',title:'是否多值搜索',width:100},
+			           {field:'regexForm',title:'正则',width:100},
+			           {field:'viewNumForm',title:'在表单中的顺序',width:100},
+			           {field:'isShowForm',title:'是否在表单中显示',width:100},
+			           {field:'isEditForm',title:'是否可编辑',width:100},
+			           {field:'formTypeForm',title:'表单中类型',width:100},
+			           {field:'groupIdFormId',title:'表单组',width:100},
+			           {field:'optionKV',title:'sele可选值',width:100},
+			           {field:'theClass',title:'显示样式',width:100},
+			           {field:'funcs',title:'js函数',width:100},
+			           {field:'action',title:'权限控制代码',width:100},
+			           {field:'createTime',title:'创建时间',width:100} */
+			           
+			       ]]
+		})
+	}
+	
+</script>
+<body class="easyui-layout">
+	<div id="tablesId"></div>
+</body>
+<div id="dlg" class="easyui-dialog" title="字段列表" style="width:800px;height:400px;"
+    data-options="iconCls:'icon-save',resizable:true,modal:true,closed:true">
+    <div id="cusFieldTableId"></div>
+</div>
+  
+</html>

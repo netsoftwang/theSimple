@@ -116,6 +116,16 @@ create table `tables`(
 	primary key (id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
+/*视图名称*/
+drop table if exists seeds.viewTable;
+create table `viewTable`(
+`id` bigint unsigned not null auto_increment ,
+`entId` bigint unsigned not null ,
+`viewName` varchar(45) not null comment'视图名称',
+`cusFieldId` bigint unsigned not null comment '地址字段的id'
+)ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
+
+
 /*mysql测试*/
 drop table if exists seeds.recordMsg;
 create table `recordMsg`(
