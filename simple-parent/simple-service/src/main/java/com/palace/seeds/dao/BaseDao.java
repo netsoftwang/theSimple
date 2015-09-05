@@ -1,6 +1,7 @@
 package com.palace.seeds.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.List;
@@ -13,8 +14,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.JdbcUtils;
+import org.springframework.jdbc.support.incrementer.DB2MainframeSequenceMaxValueIncrementer;
 import org.springframework.stereotype.Repository;
 
+import com.jfinal.plugin.activerecord.Db;
 import com.palace.seeds.helper.TableConst;
 
 
@@ -143,7 +146,14 @@ public class BaseDao implements IBaseDao{
 	//根据map中的参数名称和值生成插入语句
 	public boolean getInsertSql(Map<String,Object> params){
 		StringBuilder sb=new StringBuilder();
-		sb.append("insert into ").append(params.get(TableConst.TABLENAME)).append(" (");
+		String tableName=(String) params.get(TableConst.TABLENAME);
+		if(tableName==null|| tableName.isEmpty()){
+			throw new RuntimeException("表名称为空");
+		}else{
+			params.remove(TableConst.TABLENAME);
+		}
+		sb.append("insert into ").append(tableName).append(" (");
+		
 		Object[] objPara=new Object[params.size()];
 		StringBuilder tmpSb=new StringBuilder(" values(");
 		int i=0;
@@ -171,8 +181,13 @@ public class BaseDao implements IBaseDao{
 			con = dataSource.getConnection();
 			ps= con.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 			fillArgs(ps, args);
-			if(ps.execute()){
-				return (Long)JdbcUtils.getResultSetValue(ps.getResultSet(),1,Long.class);
+			//更新操作用executeUpdate() 查询操作用 executeQuery
+			//如果更新操作用execute 返回值是false 遍历resultset时要先next();
+			if(ps.executeUpdate()>0){
+				 ResultSet rs = ps.getGeneratedKeys();
+				 if(rs.next()){
+					 return (Long) rs.getObject(1);
+				 }
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

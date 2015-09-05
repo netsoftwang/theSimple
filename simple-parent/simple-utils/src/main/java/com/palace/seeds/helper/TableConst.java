@@ -22,6 +22,7 @@ public class TableConst {
 	
 	
 	public static final String ENT="ent";
+	public static final String ENTID="entId";
 	public static final String EMP="emp";
 	//public static final String TREE="tree";
 	//public static final String TREE="tree";

@@ -19,8 +19,14 @@ public class BaseService{
 	@Autowired
 	protected BaseDao baseDao;
 	 
-	
-	public Result save(Map<String,Object> map){
+/*	public Result save(Map<String,Object> map){
+		 if(this.baseDao.save(map)>1){
+			 return Result.succ();
+		 }else{
+			 return Result.err("保存失败!");
+		 }
+	}*/
+	public Result saveCFMap(Map<String,Object> map){
 		 List<Map<String,Object>>  listMap = getCusFile(map);
 		 StringBuilder sb=new StringBuilder(300);
 		 sb.append("insert into ").append(listMap.get(0).get("tableName("));

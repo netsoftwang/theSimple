@@ -108,7 +108,7 @@ drop table if exists seeds.tables;
 create table `tables`(
 	`id` bigint unsigned not null auto_increment comment '主键',
 	`entId` bigint unsigned not null comment '企业id',
-	`tableName` varchar(64) comment '表名称',
+	`tableNameCF` varchar(64) comment '表名称',
 	`tableNameZh` varchar(64) comment '表中文名称',
 	`type` tinyint comment '表类型值,0为普通表，1为树类型表',
 	`status` tinyint comment '状态值,0再用,1冻结',
