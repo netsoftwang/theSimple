@@ -27,6 +27,6 @@
   </filter>
   <filter-mapping>
     <filter-name>LogonFilter</filter-name>
-    <url-pattern>/LogonFilter</url-pattern>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 </web-app>

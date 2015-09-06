@@ -39,8 +39,9 @@ public class Result {
 		return res;
 	}
 
-	public void setRes(Map<String, Object> res) {
+	public Result setRes(Map<String, Object> res) {
 		this.res = res;
+		return  this;
 	}
 	
 	public Result add(String key,Object val){
