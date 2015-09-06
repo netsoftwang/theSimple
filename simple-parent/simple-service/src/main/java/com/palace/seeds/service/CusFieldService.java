@@ -3,6 +3,7 @@ package com.palace.seeds.service;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -20,8 +21,8 @@ public class CusFieldService extends BaseService implements ICusFieldService{
 	@Resource  
 	private ICusFieldDao cusFieldDao;
 	
-	public Map getPage(Map<String, Object> params) {
-		return cusFieldDao.getPage(params);
+	public Map getPage(Map<String, Object> map) {
+		return cusFieldDao.getPage(map);
 	}
 
 	public Result save(Map<String,Object>  map){

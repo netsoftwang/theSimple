@@ -63,20 +63,15 @@
 			           {field:'viewNum',title:'在列表中顺序',width:100},
 			           {field:'status',title:'状态',width:100},
 			           {field:'isShow',title:'是否在列表中显示',width:100},
-			           {field:'width',title:'在列表张宽度',width:100},
+			           {field:'width',title:'在列表中宽度',width:100},
 			           {field:'isUse',title:'是否再用',width:100},
 			           {field:'isSearch',title:'是否用于搜索',width:100},
 			           {field:'searchGroupId',title:'所属搜索组',width:100},
 			           {field:'isMutiValSerch',title:'是否多值搜索',width:100},
 			           {field:'regexForm',title:'正则',width:100},
-			           {field:'viewNumForm',title:'在表单中的顺序',width:100},
-			           {field:'isShowForm',title:'是否在表单中显示',width:100},
-			           {field:'isEditForm',title:'是否可编辑',width:100},
-			           {field:'formTypeForm',title:'表单中类型',width:100},
-			           {field:'groupIdFormId',title:'表单组',width:100},
+			           {field:'searchType',title:'如果用于条件搜索是and还是or',width:100},
 			           {field:'optionKV',title:'sele可选值',width:100},
 			           {field:'theClass',title:'显示样式',width:100},
-			           {field:'funcs',title:'js函数',width:100},
 			           {field:'action',title:'权限控制代码',width:100},
 			           {field:'createTime',title:'创建时间',width:100}
 			           
@@ -101,147 +96,88 @@
 	<div id="cusFieldTableId"></div>
 </body>
 
- <div id="dlg" class="easyui-dialog" style="width:680px;height:320px;padding:5px 10px" closed="true" buttons="#dlg-buttons">
-		<form id="fm" method="post">
-			<input type="hidden" name="id" />
-			 <div>
-			   <div class="fitem inputAlignL" >
-			        <label>企业id:</label>
-			        <input class="easyui-validatebox" type="text" name="entId" data-options="required:true" />
-			    </div>
-			   <div class="fitem inputAlignR" >
-			        <label>字段显示名称:</label>
-			        <input class="easyui-validatebox" style="align:right"  type="text" name="name" data-options="validType:''" />
-			    </div>
-		    </div>
-		    <div>
-			   <div class="fitem inputAlignL">
-			        <label>字段名:</label>
-			        <input class="easyui-validatebox" type="text" name="field" data-options="required:true" />
-			    </div>
-			   <div class="fitem inputAlignR">
-			        <label>字段类型:</label>
-			        <input class="easyui-validatebox" style="align:right" type="text" name="type" data-options="required:true" />
-			    </div>
-		    </div>
-			<div>
-			    <div class="fitem inputAlignL">
-			        <label>表名称:</label>
-			        <input class="easyui-validatebox"  type="text" name="tableName" data-options="required:true" />
-			    </div>
-			   <div class="fitem inputAlignR">
-			        <label>在列表中的顺序:</label>
-			        <input class="easyui-validatebox"  type="text" name="viewNum" data-options="" />
-			    </div>
-		    </div>
-		    <div>
-			     <div class="fitem inputAlignL">
-			        <label>状态:</label>
-			        <select class="easyui-combobox" name="status" style="width:150px;">
-					    <option value="0">再用</option>
-					    <option value="1">停用</option>
-					</select>
-			    </div>
-			    <div class="fitem inputAlignR">
-			        <label>是否在列表中显示:</label>
-					<select class="easyui-combobox" name="isShow" style="width:200px;">
-					    <option value="0">是</option>
-					    <option value="1">否</option>
-					</select>
-			    </div>
-		    </div>
-		    <div>
-			     <div class="fitem inputAlignL">
-			        <label>在列表中的宽度:</label>
-			        <input class="easyui-validatebox" type="text" name="width" data-options="" />
-			    </div>
-			    <div class="fitem inputAlignR">
-			        <label>是否在用:</label>
-			        <select class="easyui-combobox" name="isUse" style="width:200px;">
-					    <option value="0">是</option>
-					    <option value="1">否</option>
-					</select>
-			    </div>
-		    </div>
-		    <div>
-			     <div class="fitem inputAlignL">
-			        <label>是否用于搜索:</label>
-			        <select class="easyui-combobox" name="isSearch" style="width:200px;">
-					    <option value="0">是</option>
-					    <option value="1">否</option>
-					</select>
-			    </div>
-			    <div class="fitem inputAlignR">
-			        <label>所属搜索组:</label>
-			        <input class="easyui-validatebox" type="text" name="searchGroupId" data-options="" />
-			    </div>
-		     </div>
-		    <div>
-			     <div class="fitem inputAlignL">
-			        <label>是否多值搜索:</label>
-			        <select class="easyui-combobox" name="isMutiValSearch" style="width:200px;">
-					    <option value="0">是</option>
-					    <option value="1">否</option>
-					</select>
-			    </div>
-			    <div class="fitem inputAlignR">
-			        <label>正则:</label>
-			        <input class="easyui-validatebox" type="text" name="regexpForm" data-options="" />
-			    </div>
-		     </div>
-		    <div>
-			     <div class="fitem inputAlignL">
-			        <label>在表单中的顺序:</label>
-			        <input class="easyui-validatebox" type="text" name="viewNumForm" data-options="" />
-			    </div>
-			    <div class="fitem inputAlignR">
-			        <label>是否在表单中显示:</label>
-			        <select class="easyui-combobox" name="isShowForm" style="width:200px;">
-					    <option value="0">是</option>
-					    <option value="1">否</option>
-					</select>
-			    </div>
-		     </div>
-		    <div>
-			     <div class="fitem inputAlignL">
-			        <label>是否可编辑:</label>
-			        <select class="easyui-combobox" name="isEditForm" style="width:200px;">
-					    <option value="0">是</option>
-					    <option value="1">否</option>
-					</select>
-			    </div>
-			    <div class="fitem inputAlignR">
-			        <label>表单中类型:</label>
-			        <input class="easyui-validatebox" type="text" name="formTypeForm" data-options="" />
-			    </div>
-		     </div>
-		    <div>
-			     <div class="fitem inputAlignL">
-			        <label>表单组:</label>
-			        <input class="easyui-validatebox" type="text" name="groupIdForm" data-options="" />
-			    </div>
-			    <div class="fitem inputAlignR">
-			        <label>下拉可选值:</label>
-			        <input class="easyui-validatebox" type="text" name="optionKV" data-options="" />
-			    </div>
-		     </div>
-		    <div>
-			     <div class="fitem inputAlignL">
-			        <label>显示样式:</label>
-			        <input class="easyui-validatebox" type="text" name="theClass" data-options="" />
-			    </div>
-			    <div class="fitem inputAlignR">
-			        <label>js函数:</label>
-			        <input class="easyui-validatebox" type="text" name="func" data-options="" />
-			    </div>
-			     </div>
-		    <div>
-			     <div class="fitem inputAlignL">
-			        <label>权限控制代码:</label>
-			        <input class="easyui-validatebox" type="text" name="action" data-options="" />
-			    </div>
-		     </div>
-		    <div>
+ <div id="cusFieldDlg" class="easyui-dialog" style="width:680px;height:320px;padding:5px 10px" closed="true" buttons="#dlg-buttons">
+ 	<form>
+		 	<table> 
+		 		<tr>
+		 			<td><label>企业id:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="entId" data-options="required:true" /></td>
+		 			<td><label>字段显示名称:</label></td>
+		 			<td> <input class="easyui-validatebox" style="align:right"  type="text" name="name" data-options="validType:''" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>所属搜索组:</label></td>
+		 			<td> <input class="easyui-validatebox" type="text" name="searchGroupId" data-options="" /></td>
+		 			<td> <label>正则:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="regexpForm" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		  	 		<td><label>权限控制代码:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="action" data-options="" /></td>
+		 			<td><label>在列表中的宽度:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="width" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>表名称:</label></td>
+		 			<td><input class="easyui-validatebox"  type="text" name="tableName" data-options="required:true" /></td>
+		 			<td><label>在列表中的顺序:</label></td>
+		 			<td><input class="easyui-validatebox"  type="text" name="viewNum" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>字段名:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="field" data-options="required:true" /></td>
+		 			<td><label>字段类型:</label></td>
+		 			<td><input class="easyui-validatebox" style="align:right" type="text" name="type" data-options="required:true" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>显示样式:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="theClass" data-options="" /></td>
+		 			<td><label>js函数:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="func" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>表单组:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="groupIdForm" data-options="" /></td>
+		 			<td><label>下拉可选值:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="optionKV" data-options="" /></td>
+		 		</tr>
+		  	 			  	 	<tr>
+		  	 		<td><label>是否在用:</label></td>
+		 			<td><select class="easyui-combobox" name="isUse" style="width:170px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+		 			<td><label>状态:</label></td>
+		 			<td> <select class="easyui-combobox" name="status" style="width:170px;">
+							    <option value="0">再用</option>
+							    <option value="1">停用</option>
+							</select>
+					</td>
+				</tr>
+		  	 	<tr>
+		 			<td><label>是否在列表中显示:</label></td>
+		 			<td><select class="easyui-combobox" name="isShow" style="width:170px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+					<td><label>是否多值搜索:</label></td>
+		 			<td> <select class="easyui-combobox" name="isMutiValSearch" style="width:170px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+				</tr>
+		  	 	<tr>
+					<td><label>是否用于搜索:</label></td>
+		 			<td><select class="easyui-combobox" name="isSearch" style="width:170px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+		 		</tr>
+		 	</table>
 		</form>
-	</div>
+</div>
 </html>

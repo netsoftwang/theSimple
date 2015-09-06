@@ -15,21 +15,22 @@ isSearch TINYINT DEFAULT 0 COMMENT '该字段是否用于搜索,0：关闭，1�
 searchGroupId BIGINT UNSIGNED DEFAULT 0 COMMENT '如果该字段可以用来搜索，且属于一个搜索组，则字段表示搜索组id',
 isMutiValSerch TINYINT DEFAULT 0 COMMENT '是否开启多值搜索，即搜索时是否出入多个值,如果开启有三个值，则参数形式 field1="val1",field2="val2",0：关闭，1：启用',
 regexpForm VARCHAR(125) DEFAULT '' COMMENT '改字段的正则表达式',
-viewNumForm TINYINT DEFAULT 0 COMMENT '该字段在编辑框中显示的顺序',
-isShowForm TINYINT DEFAULT 1 COMMENT '是否在表单中显示0：关闭，1：开启',
-isEditForm TINYINT DEFAULT 1 COMMENT '在表单中是否可以编辑0:关闭，1：开启',
-formTypeForm VARCHAR(32) DEFAULT 'text' COMMENT '表单类型',
-groupIdFormId	BIGINT UNSIGNED DEFAULT 0 COMMENT '在表单中如果进行分组的话，表示本字段所属的组',
+searchType varchar(10) DEFAULT 'and' COMMENT '如果用于条件搜索是and还是or',
 optionKV VARCHAR(32) DEFAULT '' COMMENT '如果该字段是下拉列表，则改列代表下拉列表中的值,参数形式为：key1:val1,key2:val2',
-theClass  VARCHAR(32) DEFAULT '' COMMENT '显示的样式',
-funcs VARCHAR(32) DEFAULT '' COMMENT '该字段的函数处理',
 action VARCHAR(64) DEFAULT '' COMMENT '权限控制代码',
 createTime int DEFAULT 0 COMMENT '创建时间',
 PRIMARY KEY (id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
-
-
+-- ------------------------------------------------------------
+-- viewNumForm TINYINT DEFAULT 0 COMMENT '该字段在编辑框中显示的顺序',
+-- isShowForm TINYINT DEFAULT 1 COMMENT '是否在表单中显示0：关闭，1：开启',
+-- isEditForm TINYINT DEFAULT 1 COMMENT '在表单中是否可以编辑0:关闭，1：开启',
+-- theClass  VARCHAR(32) DEFAULT '' COMMENT '显示的样式',
+-- formTypeForm VARCHAR(32) DEFAULT 'text' COMMENT '表单类型',
+-- groupIdFormId	BIGINT UNSIGNED DEFAULT 0 COMMENT '在表单中如果进行分组的话，表示本字段所属的组',
+-- funcs VARCHAR(32) DEFAULT '' COMMENT '该字段的函数处理',
+-- ------------------------------------------------------------
 DROP TABLE if EXISTS seeds.treeNode;
 create TABLE `treeNode`(
 `id` bigint unsigned NOT NULL auto_increment COMMENT'主键',

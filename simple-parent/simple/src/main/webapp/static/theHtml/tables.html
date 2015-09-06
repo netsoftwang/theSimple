@@ -76,23 +76,14 @@
 		ctx="";
 		$("#dlg").dialog("open");
 		var data = $("#tablesId").datagrid("getSelected");
+		var url="../../cusField/getCusFieldPage?serial="+serial
+				+"&entId="+data.entId+"&tableName"+data.tableNameCF;
 		$("#cusFieldTableId").datagrid({
-			url:"../../cusField/getCusFieldPage",
+			url:url,
 			pagination:true,
 			nowrap:true,
-			fitColumns:true,
 			pageNumber:0,
-			toolbar: [{
-				iconCls: 'icon-add',
-				handler:"add"
-			},'-',{
-				iconCls: 'icon-edit',
-				handler:"edit"
-			},'-',{
-				iconCls: 'icon-remove',
-				handler:"remove"
-			}],
-			 columns:[[
+			columns:[[
 			           {field:'entId',title:'企业id',width:100},
 			           {field:'name',title:'字段显示名称',width:100},
 			           {field:'field',title:'字段名',width:100},
@@ -104,8 +95,8 @@
 			           {field:'width',title:'在列表张宽度',width:100},
 			           {field:'isUse',title:'是否再用',width:100},
 			           {field:'isSearch',title:'是否用于搜索',width:100},
-			           {field:'searchGroupId',title:'所属搜索组',width:100}
-			      /*      {field:'isMutiValSerch',title:'是否多值搜索',width:100},
+			           {field:'searchGroupId',title:'所属搜索组',width:100},
+			           {field:'isMutiValSerch',title:'是否多值搜索',width:100},
 			           {field:'regexForm',title:'正则',width:100},
 			           {field:'viewNumForm',title:'在表单中的顺序',width:100},
 			           {field:'isShowForm',title:'是否在表单中显示',width:100},
@@ -116,7 +107,7 @@
 			           {field:'theClass',title:'显示样式',width:100},
 			           {field:'funcs',title:'js函数',width:100},
 			           {field:'action',title:'权限控制代码',width:100},
-			           {field:'createTime',title:'创建时间',width:100} */
+			           {field:'createTime',title:'创建时间',width:100}
 			           
 			       ]]  
 		})
@@ -140,12 +131,6 @@
 		</div>
 	</div>
 </body>
-<!-- 字段列表 -->
-<div id="dlg" class="easyui-dialog" title="字段列表" style="width:800px;height:400px;"
-    data-options="resizable:true,modal:true,closed:true">
-    <div id="cusFieldTableId"></div>
-</div>
-
 <div id="tableDlg" class="easyui-dialog" title="字段列表" style="width:400px;height:200px;"
     data-options="resizable:true,modal:true,closed:true">
     <table width="100%" height="100%" valign="middle">
@@ -175,12 +160,120 @@
 	        </td>
 	     </tr>
 	     <tr>
-	     	
 	     	<td align="right"><input type="button" value="确定" onclick="saveTable()"></input></td>
 	        <td><input type="button" value="取消" onclick="calcel(){$('#tableDlg').dialog('close')}"></input></td>
-	       
 	    </tr>
 	    </form>
 	   </table>
-	  </div>
+	</div>
+	
+	
+	
+	<!-- 字段列表 -->
+<div id="dlg" class="easyui-dialog" title="字段列表" style="width:900px;height:400px;"
+    data-options="resizable:true,modal:true,closed:true">
+    <div id="cusFieldTableId" toolbar="#cusFieldSearchId"></div>
+    <div id="cusFieldSearchId" class="searchBox">
+		<a href="javascript:addCusField()" class="easyui-linkbutton" iconCls="icon-add" plain="true">Add</a>
+		<a href="javascript:editTable()" class="easyui-linkbutton" iconCls="icon-add" plain="true">edit</a>
+		<a href="#" class="easyui-linkbutton"iconCls="icon-add" plain="true">remove</a>
+		<a href="javascript:showTableFields()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">编辑列</a>
+		<input  class="easyui-searchbox"   plain="true"  data-options="prompt:'搜索内容',menu:'#mm',searcher:doSearch" style="width:250px;height:24px"></input>
+		<div id="mm">
+			<div data-options="name:'tableNameZh'">表名称</div>
+			<div data-options="name:'tableNameCF'">表字段值</div>
+		</div>
+	</div>
+</div>
+
+<div id="cusFieldDlg" class="easyui-dialog" style="width:896px;height:396px;padding:5px 10px" closed="true" buttons="#dlg-buttons">
+ 	<form>
+		 	<table aglign="center" width="100%" height="100%"> 
+		 		<tr>
+		 			<td><label>企业id:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="entId" data-options="required:true" /></td>
+		 			<td><label>字段显示名称:</label></td>
+		 			<td> <input class="easyui-validatebox" style="align:right"  type="text" name="name" data-options="validType:''" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>所属搜索组:</label></td>
+		 			<td> <input class="easyui-validatebox" type="text" name="searchGroupId" data-options="" /></td>
+		 			<td> <label>正则:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="regexpForm" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		  	 		<td><label>权限控制代码:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="action" data-options="" /></td>
+		 			<td><label>在列表中的宽度:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="width" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>表名称:</label></td>
+		 			<td><input class="easyui-validatebox"  type="text" name="tableName" data-options="required:true" /></td>
+		 			<td><label>在列表中的顺序:</label></td>
+		 			<td><input class="easyui-validatebox"  type="text" name="viewNum" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>字段名:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="field" data-options="required:true" /></td>
+		 			<td><label>字段类型:</label></td>
+		 			<td><input class="easyui-validatebox" style="align:right" type="text" name="type" data-options="required:true" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>显示样式:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="theClass" data-options="" /></td>
+		 			<td><label>js函数:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="func" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>表单组:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="groupIdForm" data-options="" /></td>
+		 			<td><label>下拉可选值:</label></td>
+		 			<td><input class="easyui-validatebox" type="text" name="optionKV" data-options="" /></td>
+		 		</tr>
+		  	 			  	 	<tr>
+		  	 		<td><label>是否在用:</label></td>
+		 			<td><select class="easyui-combobox" name="isUse" style="width:173px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+		 			<td><label>状态:</label></td>
+		 			<td> <select class="easyui-combobox" name="status" style="width:173px;">
+							    <option value="0">再用</option>
+							    <option value="1">停用</option>
+							</select>
+					</td>
+				</tr>
+		  	 	<tr>
+		 			<td><label>是否在列表中显示:</label></td>
+		 			<td><select class="easyui-combobox" name="isShow" style="width:173px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+					<td><label>是否多值搜索:</label></td>
+		 			<td> <select class="easyui-combobox" name="isMutiValSearch" style="width:173px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+				</tr>
+		  	 	<tr>
+					<td><label>是否用于搜索:</label></td>
+		 			<td><select class="easyui-combobox" name="isSearch" style="width:173px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+		 		</tr>
+		 	</table>
+		</form>
+</div>
+<script type="text/javascript">
+	function  addCusField(){
+		$("#cusFieldDlg").dialog("open");
+	}
+</script>
+
 </html>

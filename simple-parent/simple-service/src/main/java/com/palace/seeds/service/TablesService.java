@@ -26,31 +26,6 @@ public class TablesService extends BaseService{
 	}
 	
 	public Map<String,Object> getPage(Map<String,Object> map){
-		//这里应该有权限控制，管理员权限，企业权限和用户权限
-		return getPage(tablesDao.queryForLong("select count(1) from tables where 1=1 "+getCondition(map)) , 
-				tablesDao.queryForListMap("select * from tables where 1=1 "+getCondition(map)+getOrder(map)+" limit ?,? ",Long.parseLong((String)map.get("page")),Long.parseLong((String)map.get("rows"))));
+		return getPage(map,"tables");
 	}
-	
-	public  String getCondition(Map<String,Object> map){
-		String sql = " ";
-		for(String key : map.keySet()){
-			if(key.startsWith("key")){
-				sql+=" and "+ key.split("_")[1]+" like '%"+map.get(key+"' ");
-			}
-		}
-	return sql;
-	}
-	
-	
-	 public String getOrder(Map<String,Object> map){
-		 if(map.containsKey("sort")){
-			 return " order by "+map.get("sort")+" "+ map.get("order");
-		 }else{
-			 return " " ;
-		 }
-	 }
-	
-	
-	
-	
 }

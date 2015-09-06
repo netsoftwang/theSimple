@@ -67,12 +67,43 @@ public class BaseService{
 			return (List<Map<String, Object>>) obj;
 		}
 	}
-	
-	
 	public long getEntId(){
 		return 1l;
 	}
+	public Map<String,Object> getPage(Map<String,Object> map,String tableName){
+		//这里应该有权限控制，管理员权限，企业权限和用户权限
+		 Long  total = baseDao.queryForLong("select count(1) from "+tableName+" where 1=1 "+getCondition(map));
+		 List<Map<String,Object>>listMap =baseDao.queryForListMap("select * from "+tableName+" where 1=1 "+getCondition(map)+getOrder(map)
+						+" limit ?,? ",Long.parseLong((String)map.get("page")),Long.parseLong((String)map.get("rows")));
+		 Map<String,Object> retMap = new HashMap<String,Object>();
+		 retMap.put(TableConst.TOTAL,total);
+		 retMap.put(TableConst.ROWS, listMap);
+		 return retMap;
+	}
 	
+	public  String getCondition(Map<String,Object> map){
+		String sql = " ";
+		for(String key : map.keySet()){
+			if(key.startsWith("key")){
+				sql+=" and "+ key.split("_")[1]+" like '%"+map.get(key+"' ");
+			}
+		}
+	return sql;
+	}
+	 public String getOrder(Map<String,Object> map){
+		 if(map.containsKey("sort")){
+			 return " order by "+map.get("sort")+" "+ map.get("order");
+		 }else{
+			 return " " ;
+		 }
+	 }
+	 
+	public Map<String,Object> getPage(Long total,List<Map<String,Object>> rows){
+		 Map<String,Object> retMap = new HashMap<String,Object>();
+		 retMap.put(TableConst.TOTAL,total);
+		 retMap.put(TableConst.ROWS, rows);
+		 return retMap;
+	}
 	
 	public <T> T getObj(Map<String,Object>  map,Class<T> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		T  ins= clazz.newInstance();
@@ -97,12 +128,7 @@ public class BaseService{
 		return null;
 	}
 	
+
 	
 	
-	public Map<String,Object> getPage(Long total,List<Map<String,Object>> val){
-		Map<String,Object> res=new HashMap<String, Object>();
-		 res.put(TableConst.TOTAL,total);
-		 res.put(TableConst.ROWS, val);
-		 return res;
-	}
 }
