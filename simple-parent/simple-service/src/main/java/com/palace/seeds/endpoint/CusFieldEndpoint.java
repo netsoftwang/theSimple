@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.palace.seeds.helper.Result;
 import com.palace.seeds.service.ICusFieldService;
 
 @Controller
@@ -21,6 +22,10 @@ public class CusFieldEndpoint {
 	@RequestMapping("getCusFieldPage")
 	public @ResponseBody Map<String,Object> getCusFieldPage(@RequestParam Map<String,Object> map){
 		return cusFieldService.getPage(map);
+	}
+	@RequestMapping("add")
+	public @ResponseBody Result add(@RequestParam Map<String,Object> map){
+		return cusFieldService.save(map);
 	}
 	 
 }

@@ -1,9 +1,6 @@
 package com.palace.seeds.service;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -45,4 +42,5 @@ public class CusFieldService extends BaseService implements ICusFieldService{
 			System.out.println(fieldName);
 		}
 	}
+
 }

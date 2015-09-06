@@ -33,7 +33,6 @@
 		
 		var pager= $("#tablesId").datagrid("getPager");
 		pager.pagination("beforePageText","dddd");
-		console.log("ddd");
 	});
 	
 	function addTable(ctx,serial){
@@ -78,7 +77,7 @@
 		var data = $("#tablesId").datagrid("getSelected");
 		var url="../../cusField/getCusFieldPage?serial="+serial
 				+"&entId="+data.entId+"&tableName"+data.tableNameCF;
-		$("#cusFieldTableId").datagrid({
+		$("#cusFieldId").datagrid({
 			url:url,
 			pagination:true,
 			nowrap:true,
@@ -172,10 +171,10 @@
 	<!-- 字段列表 -->
 <div id="dlg" class="easyui-dialog" title="字段列表" style="width:900px;height:400px;"
     data-options="resizable:true,modal:true,closed:true">
-    <div id="cusFieldTableId" toolbar="#cusFieldSearchId"></div>
+    <div id="cusFieldId" toolbar="#cusFieldSearchId"></div>
     <div id="cusFieldSearchId" class="searchBox">
 		<a href="javascript:addCusField()" class="easyui-linkbutton" iconCls="icon-add" plain="true">Add</a>
-		<a href="javascript:editTable()" class="easyui-linkbutton" iconCls="icon-add" plain="true">edit</a>
+		<a href="javascript:editCusField()" class="easyui-linkbutton" iconCls="icon-add" plain="true">edit</a>
 		<a href="#" class="easyui-linkbutton"iconCls="icon-add" plain="true">remove</a>
 		<a href="javascript:showTableFields()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">编辑列</a>
 		<input  class="easyui-searchbox"   plain="true"  data-options="prompt:'搜索内容',menu:'#mm',searcher:doSearch" style="width:250px;height:24px"></input>
@@ -187,7 +186,7 @@
 </div>
 
 <div id="cusFieldDlg" class="easyui-dialog" style="width:896px;height:396px;padding:5px 10px" closed="true" buttons="#dlg-buttons">
- 	<form>
+ 	<form id="cusFieldDlg">
 		 	<table aglign="center" width="100%" height="100%"> 
 		 		<tr>
 		 			<td><label>企业id:</label></td>
@@ -267,12 +266,35 @@
 							</select>
 					</td>
 		 		</tr>
+			 	 <tr>
+			     	<td align="right"><input type="button" value="确定" onclick="saveTable()"></input></td>
+			        <td><input type="button" value="取消" onclick="calcel2(){$('#tableDlg').dialog('close')}"></input></td>
+			    </tr>
 		 	</table>
 		</form>
 </div>
 <script type="text/javascript">
 	function  addCusField(){
 		$("#cusFieldDlg").dialog("open");
+	}
+	
+	function saveCusField(){
+		var data= $("#cusFieldDlg").serialize();
+		$.post("../../cusField/add",val,function(res){
+			if(res.code == 200){
+				$.messager.alert("操作提示", "操作成功！");
+			}else{
+				$.messager.alert("操作提示", "操作失败！");
+			}
+			$("#cusFieldId").datagrid("reload");
+			$("#cusFieldDlg").dialog("close");
+		});
+	}
+	function editCusField(){
+		var data=$("#cusFieldId").datagrid("getSelected");
+		for(var key in data){
+			$("#"+key).val(data[key]);
+		}
 	}
 </script>
 
