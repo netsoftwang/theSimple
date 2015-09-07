@@ -15,4 +15,5 @@ public class Cache {
 	public static void put(String key ,Object obj){
 		map.put(key,obj);
 	}
+	
 }

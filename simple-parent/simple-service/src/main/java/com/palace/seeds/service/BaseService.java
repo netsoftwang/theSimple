@@ -9,11 +9,13 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.palace.seeds.dao.BaseDao;
+import com.palace.seeds.data.UserInfo;
 import com.palace.seeds.helper.Cache;
 import com.palace.seeds.helper.Result;
 import com.palace.seeds.helper.TableConst;
 import com.palace.seeds.model.CusField;
 import com.palace.seeds.model.Model;
+import com.palace.seeds.model.User;
 
 public class BaseService{
 	@Autowired
@@ -68,6 +70,9 @@ public class BaseService{
 		}
 	}
 	public long getEntId(){
+		User user= UserInfo.userLocal.get();
+		user.getEntId();
+		System.out.println("thread local entid=="+user.getEntId());
 		return 1l;
 	}
 	public Map<String,Object> getPage(Map<String,Object> map,String tableName){

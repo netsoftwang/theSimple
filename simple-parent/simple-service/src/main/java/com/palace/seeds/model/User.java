@@ -9,8 +9,21 @@ public class User {
 	private String userNameZh;
 	private Long logonTime;
 	private Role role;
+	private String serial;
 	
 	
+	public String getSerial() {
+		return serial;
+	}
+	public void setSerial(String serial) {
+		this.serial = serial;
+	}
+	public String getLogonId() {
+		return logonId;
+	}
+	public void setLogonId(String logonId) {
+		this.logonId = logonId;
+	}
 	public Long getId() {
 		return id;
 	}
