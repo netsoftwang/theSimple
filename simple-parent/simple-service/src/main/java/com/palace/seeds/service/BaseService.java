@@ -70,9 +70,9 @@ public class BaseService{
 		}
 	}
 	public long getEntId(){
-		User user= UserInfo.userLocal.get();
+/*		User user= UserInfo.userLocal.get();
 		user.getEntId();
-		System.out.println("thread local entid=="+user.getEntId());
+		System.out.println("thread local entid=="+user.getEntId());*/
 		return 1l;
 	}
 	public Map<String,Object> getPage(Map<String,Object> map,String tableName){
