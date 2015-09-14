@@ -28,4 +28,10 @@ public class TablesEndpoint {
 	public @ResponseBody Result add(@RequestParam Map<String,Object> map){
 		return tablesService.add(map);
 	}
+	
+	@RequestMapping("del")
+	public @ResponseBody Result del(@RequestParam Map<String,Object> map){
+		return tablesService.del(map);
+	}
+	
 }

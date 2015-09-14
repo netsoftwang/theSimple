@@ -19,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import com.jfinal.plugin.activerecord.Db;
 import com.palace.seeds.helper.TableConst;
+import com.palace.seeds.util.StringKit;
 
 
 @Repository
@@ -67,13 +68,6 @@ public class BaseDao implements IBaseDao{
 			showSql(sql+" from "+tableName+" where id="+id, "");
 		return jdbcTemplate.queryForMap(sql+" from "+tableName+" where id="+id);
 	}
-/*	public Map<String,Object> getPage(String totalSql,String objSql,Object ...args){
-		Map<String,Object> map=new java.util.HashMap<String, Object>();
-		map.put(ConstVal.TOTAL,queryForLong(totalSql,args));
-		map.put(ConstVal.ROWS,queryForListMap(objSql, args));
-		return map;
-	}*/
-
 	//根据sql和多个条件查询唯一值，且值得类型是long
 	 public Long queryForLong(String sql,Object ...args){
 		 return queryForObj(sql,Long.class, args);
@@ -90,6 +84,7 @@ public class BaseDao implements IBaseDao{
 				showSql(sql, args);
 			ps = con.prepareStatement(sql);
 			fillArgs(ps, args);
+			//java.sql.ResultSet rs1= ps.executeQuery();
 			if(ps.execute()){
 				java.sql.ResultSet rs = ps.getResultSet(); 
 				ResultSetMetaData resMetaData = rs.getMetaData();
@@ -113,17 +108,6 @@ public class BaseDao implements IBaseDao{
 		}
 		return null;
 	}
-	
-	
-	//根据表名称，sql和条件更新一行数据的值
-	public Integer update(String tableName,String sql,String condition){
-		StringBuilder sb=new StringBuilder();
-		sb.append("update ").append(tableName).append(" set ").append(sql).append(" where ").append(condition);
-		if(TableConst.SHOWSQL)
-			showSql(sb.toString(),"");
-		return jdbcTemplate.update(sb.toString());
-	}
-	
 	private void fillArgs(PreparedStatement ps,Object ...args){
 			try {
 				for(int i=0;i<args.length;i++){
@@ -191,6 +175,7 @@ public class BaseDao implements IBaseDao{
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return -1l;
 		}finally{
 			try {
 				ps.close();
@@ -206,4 +191,63 @@ public class BaseDao implements IBaseDao{
 		getInsertSql(params);
 		return insert((String)params.get(TableConst.SQL),(Object[])params.get(TableConst.SQLPARAMS));
 	}
+	
+	
+	//----------------------------------update--------------------------------------------------------------------
+	//根据表名称，sql和条件更新一行数据的值
+	public Integer update(String tableName,String sql,String condition){
+		StringBuilder sb=new StringBuilder();
+		sb.append("update ").append(tableName).append(" set ").append(sql).append(" where ").append(condition);
+		if(TableConst.SHOWSQL)
+			showSql(sb.toString(),"");
+		return jdbcTemplate.update(sb.toString());
+	}
+	public  int updateById(String tableName,String id,Map<String,Object> map){
+		return update(tableName, map," id="+id);
+	}
+	/*public boolean updateById(Long id ,Object ...args){
+		return true;
+	}*/
+	public int  update(String tableName,Map<String,Object> map,String cond){
+		if(map.isEmpty())
+			return -1;
+		StringBuilder sb=new StringBuilder("update ");
+		sb.append(tableName).append(" set ");
+		Object[] arr=new Object[map.size()];
+		int i=0;
+		for(Map.Entry<String,Object> entry: map.entrySet()){
+			 sb.append(entry.getKey()).append("=?,");
+			 arr[i]=entry.getValue();
+			 i++;
+		}
+		String sql= sb.toString();
+		sql=sql.substring(0,sql.length()-1);
+		if(!StringKit.isEmpety(cond))
+			sql=sql+" where 1=1 and "+cond;
+		if(TableConst.SHOWSQL)
+			showSql(sql,arr);
+		Connection con = DataSourceUtils.getConnection(dataSource);
+		PreparedStatement ps=null;
+		try {
+			ps= con.prepareStatement(sql);
+			fillArgs(ps,arr);
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}finally{
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			DataSourceUtils.releaseConnection(con, dataSource);
+		}
+	}
+	
+	public int delById(String tableName,String id){
+		return jdbcTemplate.update("delete from "+tableName+" where id="+id);
+	}
+	
 }

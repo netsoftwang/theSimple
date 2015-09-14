@@ -27,5 +27,14 @@ public class CusFieldEndpoint {
 	public @ResponseBody Result add(@RequestParam Map<String,Object> map){
 		return cusFieldService.save(map);
 	}
-	 
+	
+	@RequestMapping("edit")
+	public @ResponseBody Result edit(@RequestParam Map<String,Object> map){
+		return cusFieldService.edit(map);
+	}
+	@RequestMapping("del")
+	public @ResponseBody Result del(@RequestParam Map<String,Object> map){
+		return cusFieldService.del(map);
+	}
+	
 }

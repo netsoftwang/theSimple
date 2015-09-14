@@ -3,9 +3,17 @@
 	margin-right:15px;
 }
 .searchBox{
-	
+	background:#E0ECFF;
+	border:0px;
+	padding:5px,10px;
 }
 
 .linkButtonBackground{
 	  
+}
+.topBackground{
+  height:40px;
+  background-color: #E0ECFF;
+  background-image:url(./images/top-Background1.png);
+  background-repeat: repeat
 }

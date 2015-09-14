@@ -4,8 +4,10 @@
 	<link rel="stylesheet" type="text/css" href="../css/easyui.css">
 	<link rel="stylesheet" type="text/css" href="../css/icon.css">
 	<link rel="stylesheet" type="text/css" href="../css/seeds.css">
+	
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
 </head>
 
 <style type="text/css">
@@ -46,8 +48,21 @@
 		$("#status").val(data.status);
 		$("#tableDlg").dialog("open");
 	}
-	function removeTable(ctx,serial){
-		
+	function delTable(){
+		var data = $("#tableFormId").serialize();
+		if(data==null){
+			$.messager.alert("操作提示","请选择要删除的行！");
+			return ;
+		}
+		$.post("../../tables/del",{"id":data.id},function(res){
+			if(res.code == 200){
+				$.messager.alert("操作提示", "操作成功！");
+			}else{
+				$.messager.alert("操作提示", "操作失败！");
+			}
+			$("#tablesId").datagrid("reload");
+			$("#tableDlg").dialog("close");
+		});
 	}
 	function doSearch(value,name){
 		if(value==""){
@@ -75,8 +90,6 @@
 		var tables_tableNameZH;
 		var tables_tableNameCF;
 	//-----------------------------------
-	
-	
 	function showTableFields(ctx,serial){
 		ctx="";
 		var data = $("#tablesId").datagrid("getSelected");
@@ -123,10 +136,10 @@
 <body class="easyui-layout">
 	<div id="tablesId"  data-options="toolbar:'#tablesSearchId'"></div>
 	<div id="tablesSearchId" class="searchBox">
-		<a href="javascript:addTable()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cancel'">Add</a>
-		<a href="javascript:editTable()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cancel'">edit</a>
-		<a href="#" class="easyui-linkbutton"iconCls="icon-add" plain="true">remove</a>
-		<a href="javascript:showTableFields()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">编辑列</a>
+		<a href="javascript:addTable()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a>
+		<a href="javascript:editTable()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改</a>
+		<a href="javascript:delTable()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cancel'">删除</a>
+		<a href="javascript:showTableFields()" class="easyui-linkbutton"  data-options="plain:true,iconCls:'icon-edit'">编辑字段</a>
 		<input  class="easyui-searchbox"   plain="true"  data-options="prompt:'搜索内容',menu:'#mm',searcher:doSearch" style="width:250px;height:24px"></input>
 		<div id="mm">
 			<div data-options="name:'tableNameZh'">表名称</div>
@@ -171,15 +184,30 @@
 	</div>
 	
 	<script type="text/javascript">
+	//保存字段信息
 	function  addCusField(){
-		//$("#cusFieldFormId").form("clear");
+		opeationType="add";
 		$("#ZHTableName").textbox("setValue",tables_tableNameZH);
 		$("#cusFieldDlg").dialog("open");
 	}
-	
-	function saveCusForTable(){
-		var data= getValObj();
-		$.post("../../cusField/add",data,function(res){
+	//编辑字段信息
+	function editCusField(){
+		opeationType="edit";
+		var data=$("#cusFieldId").datagrid("getSelected");
+		if(data==null){
+			$.messager.alert("操作提示","请选择要编辑的行！");
+			return ;
+		}
+		setVal(data);
+		$("#cusFieldDlg").dialog("open");
+	}
+	function delCusField(){
+		var data=$("#cusFieldId").datagrid("getSelected");
+		if(data==null){
+			$.messager.alert("操作提示","请选择要删除的行！");
+			return ;
+		}
+		$.post("../../cusField/del",{"id":data.id},function(res){
 			if(res.code == 200){
 				$.messager.alert("操作提示", "操作成功！");
 			}else{
@@ -189,16 +217,34 @@
 			$("#cusFieldDlg").dialog("close");
 		});
 	}
-	function editCusField(){
-		var data=$("#cusFieldId").datagrid("getSelected");
-		for(var key in data){
-			$("#"+key).val(data[key]);
+	
+	//保存操作
+	function saveCusForTable(){
+		var url="../../cusField/";
+		var data= getValObj();
+		if(opeationType =="add"){
+			url+="add";
+		}else if(opeationType =="edit"){
+			url+="edit";
 		}
+		$.post(url,data,function(res){
+			if(res.code == 200){
+				$.messager.alert("操作提示", "操作成功！");
+			}else{
+				$.messager.alert("操作提示", res.msg);
+			}
+			$("#cusFieldId").datagrid("reload");
+			$("#cusFieldDlg").dialog("close");
+		});
 	}
+	
+	//---------------------------------------------------------------------------------------------
 	var comboBoxField=new Array("CFType","isShow","isMutiValSearch","isSearch","isUse","CFStatus");
 	var textBoxField=new Array("field","name","inFormType","action","viewNum","regexpForm","CFWidth","optionKV");
+	var opeationType="none";
+	//---------------------------------------------------------------------------------------------
 	function getValObj(){
-		var obj=new Object();
+		 var obj=new Object();
 		 for(var i=0;i<comboBoxField.length;i++){
 			 var field=comboBoxField[i];
 			 obj[field]=$("#"+field).combobox("getValue");
@@ -208,7 +254,23 @@
 			 obj[tbField]=$("#"+tbField).textbox("getValue");
 		 }
 		 obj["CFTableName"]=tables_tableNameCF;
+		 var id=$("#conditionId").val();
+		 if(!!id)
+			 obj["id"]=id;
 		return obj;		
+	}
+	
+	function setVal(data){
+		for(var i=0;i<comboBoxField.length;i++){
+			 var field=comboBoxField[i];
+			 $("#"+field).combobox("setValue",data[field]);
+		 }
+		 for(var j=0;j<textBoxField.length;j++){
+			 var tbField=textBoxField[j];
+			 $("#"+tbField).textbox("setValue",data[tbField]);
+		 }
+		 $("#ZHTableName").textbox("setValue",tables_tableNameCF);
+		 $("#conditionId").val(data.id);
 	}
 </script>
 	
@@ -217,10 +279,9 @@
     data-options="resizable:true,modal:true,closed:true">
     <div id="cusFieldId" toolbar="#cusFieldSearchId"></div>
     <div id="cusFieldSearchId" class="searchBox">
-		<a href="javascript:addCusField()" class="easyui-linkbutton" iconCls="icon-add" plain="true">Add</a>
-		<a href="javascript:editCusField()" class="easyui-linkbutton" iconCls="icon-add" plain="true">edit</a>
-		<a href="#" class="easyui-linkbutton"iconCls="icon-add" plain="true">remove</a>
-		<a href="javascript:showTableFields()" class="easyui-linkbutton" data-options="iconCls:'icon-add'">编辑列</a>
+		<a href="javascript:addCusField()"  class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加字段</a>
+		<a href="javascript:editCusField()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改字段</a>
+		<a href="javascript:delCusField()"  class="easyui-linkbutton"  data-options="plain:true,iconCls:'icon-cancel'">删除字段</a>
 		<input  class="easyui-searchbox"   plain="true"  data-options="prompt:'搜索内容',menu:'#mm',searcher:doSearch" style="width:250px;height:24px"></input>
 		<div id="mm">
 			<div data-options="name:'tableNameZh'">表名称</div>
@@ -231,6 +292,7 @@
 
 <div id="cusFieldDlg" class="easyui-dialog" style="width:896px;height:396px;padding:5px 10px" closed="true" buttons="#dlg-buttons">
  	<form id="cusFieldFormId">
+ 			<input type="hidden" id="conditionId" name="conditionId"/>
 		 	<table aglign="center" width="100%" height="100%"> 
 	 			<tr>
 	 				<td><label>表名称:</label></td>
@@ -321,7 +383,7 @@
 					<td></td>
 					<td><input type="button" value="确定" onclick="saveCusForTable()" style="width:85px"/></td>
 					<td></td>
-					<td><input type="button" value="取消 " onclick="cusFieldCancel(){$('#cusFieldDlg').dialog('close')}" style={"width:85px"}/></td>
+					<td><input type="button" value="取消 " onclick="cusFieldCancel(){$('#cusFieldDlg').dialog('close')}" style="width:85px"/></td>
 				</tr>
 		 	</table>
 		</form>
