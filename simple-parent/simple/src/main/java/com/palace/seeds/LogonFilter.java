@@ -59,7 +59,7 @@ public class LogonFilter implements Filter {
 		HttpServletRequest req=(HttpServletRequest) request;
 		HttpServletResponse res=(HttpServletResponse)response;
 		String uri = req.getRequestURI();
-		if(uri.contains("logon")){
+		if(uri.contains("doLogon")){
 			String logonId= request.getParameter("logonId");
 			String pwd=request.getParameter("pwd");
 			if(logonId==null || logonId.isEmpty()){
