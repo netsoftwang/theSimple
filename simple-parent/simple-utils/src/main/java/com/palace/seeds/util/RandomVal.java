@@ -9,15 +9,16 @@ public class RandomVal {
 		,'m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
 	public static final char[] c2=new char[]{'A','B','C','D','E','F','G','H','I','J','K','L'
 		,'M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-	public static final char[] character=new char[]{'0','1','2','3','4','5','6','7','8','9'};
+	public static final char[] c3=new char[]{'0','1','2','3','4','5','6','7','8','9'};
 	
 	public static Random random = new Random();
 	
 	/*
 	 * 指定长度的随机字符串，全部都小写
 	 */
-	static StringBuilder sb1= new StringBuilder(22); 
 	public static String randomLowerStr(int num){
+		StringBuilder sb1= new StringBuilder(num); 
+		Random random = new Random();
 		sb1.delete(0, sb1.length());
 		for(int i=0;i<num;i++){
 			sb1.append(c1[random.nextInt(22)]);
@@ -32,9 +33,9 @@ public class RandomVal {
 	/*
 	 * 指定长度的随机字符串，大小写
 	 */
-	static StringBuilder sb2= new StringBuilder(22); 
 	public static String randomStr(int num){
-		sb2.delete(0, sb2.length());
+		StringBuilder sb2= new StringBuilder(num); 
+		Random random = new Random();
 		for(int i=0;i<num;i++){
 			if(random.nextBoolean())
 				sb2.append(c1[random.nextInt(22)]);
@@ -47,13 +48,25 @@ public class RandomVal {
 	/*
 	 * 指定长度的随机字符串，全部都小写,线程安全的
 	 */
-	StringBuilder sb3;
 	public static  synchronized String randomStrSyc(int num){
-		StringBuilder sb3= new StringBuilder(22); 
-		sb1.delete(0, sb3.length());
+		StringBuilder sb3= new StringBuilder(num); 
+		Random random = new Random();
 		for(int i=0;i<num;i++){
 			sb3.append(c1[random.nextInt(22)]);
 		}
 		return sb3.toString();
 	}
+	
+	/**
+	 * 获取随机数值串
+	 */
+	public static  synchronized String randomNumStr(int num){
+		StringBuilder sb3= new StringBuilder(num); 
+		Random random = new Random();
+		for(int i=0;i<num;i++){
+			sb3.append(c3[random.nextInt(10)]);
+		}
+		return sb3.toString();
+	}
+	
 }
