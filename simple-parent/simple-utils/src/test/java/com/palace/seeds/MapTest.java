@@ -3,7 +3,7 @@ package com.palace.seeds;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.palace.seeds.util.RandomMsg;
+import com.palace.seeds.util.RandomVal;
 
 public class MapTest {
 	
@@ -38,11 +38,11 @@ public class MapTest {
 			@Override
 			public void run() {
 				for(int i=0;i<20;i++){
-					String str= RandomMsg.nextStr();
+					String str= RandomVal.nextStr();
 					if(i==10){
 						str1=str;
 					}
-					putMap(str, RandomMsg.nextStr());
+					putMap(str, RandomVal.nextStr());
 				}
 				map.entrySet().iterator();
 				while(true){

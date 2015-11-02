@@ -2,7 +2,7 @@ package com.palace.seeds.util;
 
 import java.util.Random;
 
-public class RandomMsg {
+public class RandomVal {
 
 	 
 	public static final char[] c1=new char[]{'a','b','c','d','e','f','g','h','i','j','k','l'

@@ -6,4 +6,17 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>simple-utils</artifactId>
+  
+  <dependencies>
+  	  <dependency>    
+		<groupId>com.jfinal</groupId>    
+		<artifactId>jfinal</artifactId>    
+		<version>1.5</version>    
+      </dependency>
+      <dependency>
+		<groupId>org.apache.tomcat</groupId>
+		<artifactId>tomcat-jdbc</artifactId>
+		<version>8.0.26</version>
+	 </dependency>
+  </dependencies>
 </project>
