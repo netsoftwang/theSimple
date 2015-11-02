@@ -10,7 +10,12 @@ public class User {
 	private String email;
 	private int age;
 	
-	
+	public User(String name) {
+		super();
+		this.name = name;
+		this.email =RandomVal.randomNumStr(10)+"@qq.com";
+		this.age = new Random().nextInt(30);
+	}
 	public User(String name, String email, int age) {
 		super();
 		this.name = name;
@@ -47,4 +52,11 @@ public class User {
 		}
 		return list;
 	}
+	@Override
+	public String toString() {
+		return "User [name=" + name + ", email=" + email + ", age=" + age + "]";
+	}
+	
+	
+	
 }
