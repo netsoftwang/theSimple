@@ -6,6 +6,24 @@ import java.util.Map;
 import com.palace.seeds.util.RandomMsg;
 
 public class MapTest {
+	
+	
+	//----------------HashTable----------------------------
+	/**
+	 * HashTable是线程安全的。
+	 * 如果在迭代的时候修改HashTable中的内容是否会发生异常，
+	 * 他的安全域是怎么样，如果我要迭代其中的内容，整个迭代的循环周期都是线程安全的么
+	 */
+	
+	String[] keyArr = new String[20];
+	public void run3(){
+		
+		
+	}
+	
+	
+	
+	
 
 	static Map<String,String> map  =  new HashMap<String,String>();
 	static public synchronized  void putMap(String key ,String val){
