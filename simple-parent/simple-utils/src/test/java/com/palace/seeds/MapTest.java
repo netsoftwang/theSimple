@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executors;
 
 import com.palace.seeds.util.RandomVal;
@@ -13,24 +14,39 @@ import com.palace.seeds.util.User;
 public class MapTest {
 	
 	public static void main(String[] args) {
-		final MapTest mt = new MapTest(); 
 		
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				mt.run3();
-			}
-		}).start();
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				mt.run4();
-			}
-		}).start();
+		
+
 	}
 	
 	
+	Map<String,User>  currMap = new ConcurrentHashMap<String,User>();
+	boolean flag=false;
+	public void run5(){
+		
+		
+		
+		
+	}
+
+	
 	//----------------HashTable----------------------------
+		public void threadRun1(){
+			final MapTest mt = new MapTest(); 
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mt.run3();
+				}
+			}).start();
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					mt.run4();
+				}
+			}).start();
+		}
+		
 	/**
 	 * HashTable是线程安全的。
 	 * 如果在迭代的时候修改HashTable中的内容是否会发生异常，
