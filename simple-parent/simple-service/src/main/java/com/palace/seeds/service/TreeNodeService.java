@@ -15,6 +15,7 @@ import com.palace.seeds.dao.ITreeDao;
 import com.palace.seeds.dao.ITreeNodeDao;
 import com.palace.seeds.helper.Result;
 import com.palace.seeds.helper.TableConst;
+import com.palace.seeds.model.TreeNode;
 import com.palace.seeds.util.StringKit;
 
 @Service
@@ -95,23 +96,29 @@ public class TreeNodeService extends BaseService implements ITreeService{
 	
 	public Result queryNode(Map<String,Object> params){
 		
-		
-		 params.put("entId",0);
-	/*	 List<Map<String,Object>> listMap= treeNodeDao.queryForListMap(
-		 		"select  tn1.* from treeNode tn1 join treeNode tn2 on tn1.id=tn2.id "
-		 		+ " where  tn2.id=? and tn1.left >tn2.left and tn1.right < tn2.right and tn1.name=? and tn1.entId=?"
-		 		,MapUtils.getString(params,TableConst.ID)
-		 		,MapUtils.getString(params,"name")
-		 		,MapUtils.getString(params,"entId"));*/
-		 List listMap= treeNodeDao.queryForListMap(
-				 "select * from treeNode where parentId=?",MapUtils.getString(params,TableConst.ID));
-		 listMap.add(new HashMap().put("child",
-				 treeNodeDao.queryForListMap("select * from ? where treeNodeId=?"
-						 ,MapUtils.getString(params,TableConst.TABLENAME)
-						 ,MapUtils.getString(params,TableConst.ID)))
-				 );
-		return  null;
-				 
+		Integer type=MapUtils.getInteger(params,"type");
+		if(type==null){
+			return Result.err("节点类型获取失败");
+		}
+		if(type==0){
+			//标志这是正常节点
+			List list = treeDao.queryForListMap("select * from "+TableConst.TREENODE+" where parentId=? and entId=? "
+					,MapUtils.getString(params,"paraentId")
+					,MapUtils.getString(params,"entId"));
+			return Result.succ().add(TreeNode.treeNode_Node_Key,list);
+		}else if(type==1){
+			//表示这是过渡节点
+			List list = treeDao.queryForListMap("select * from "+TableConst.TREENODE+" where parentId=? and entId=? "
+					,MapUtils.getString(params,"paraentId")
+					,MapUtils.getString(params,"entId"));
+			List childList = treeDao.queryForListMap("select * from "+MapUtils.getString(params,TableConst.TABLENAME)
+					+" where "+MapUtils.getString(params,TableConst.TABLENAME));
+			return Result.succ()
+				.add(TreeNode.treeNode_Node_Key, list)
+				.add(TreeNode.treeNode_Node_Child_Key,childList);
+		}else{
+			return Result.err("无法识别的类型");
+		}
 	}
 
 }

@@ -42,6 +42,12 @@ public class BaseDao implements IBaseDao{
 		return jdbcTemplate.queryForMap(sql, args);
 	}
 	//根据sql查询多行,每一行放入到一个map中
+	public List<Map<String,Object>> queryForListMap(String sql){
+		if(TableConst.SHOWSQL)
+			showSql(sql,null);
+		return jdbcTemplate.queryForList(sql);
+	}
+	//根据sql查询多行,每一行放入到一个map中
 	public List<Map<String,Object>> queryForListMap(String sql,Object ...args){
 		if(TableConst.SHOWSQL)
 			showSql(sql,args);
@@ -128,6 +134,8 @@ public class BaseDao implements IBaseDao{
 			for(int i=0;i<args.length;i++){
 				sql=sql+":::::para"+i+"="+args[i];
 			}
+			System.out.println(sql);
+		}else{
 			System.out.println(sql);
 		}
 	}
