@@ -12,33 +12,46 @@
 <style type="text/css">
 </style>
 <script type="text/javascript">
-$("#tablesId").datagrid({
-	url:"../../treeNode/getPage",
-	pagination:true,
-	nowrap:true,
-	fitColumns:true,
-	singleSelect:true,
-/* 	sortName:"tableNameCF",
-	sortOrder:"desc", */
-	pageNumber:0,
-	columns:[[
-	           {field:'entId',title:'企业id',width:100},
-	           {field:'name',title:'节点名称',width:100},
-	           {field:'field',title:'字段值',width:100},
-	           {field:'type',title:'节点类型',width:100},
-	           {field:'status',title:'状态',width:100},
-	           {field:'theClass',title:'class',width:100}
-	           {field:'url',title:'url',width:100},
-	           {field:'icon',title:'图标',width:100},
-	           {field:'action',title:'权限',width:100},
-	           {field:'isHasChild',title:'是否有子节点',width:100},
-	           {field:'talbeName',title:'子节点表名',width:100},
-	           {field:'condition',title:'查询条件',width:100},
-	       ]]
+$(function(){
+	$("#tableId").datagrid({
+		url:"../../treeNode/getPage",
+		pagination:true,
+		nowrap:true,
+		fitColumns:true,
+		singleSelect:true,
+	/* 	sortName:"tableNameCF",
+		sortOrder:"desc", */
+		pageNumber:0,
+		columns:[[
+		           {field:'entId',title:'企业id',width:100},
+		           {field:'name',title:'节点名称',width:100},
+		           {field:'field',title:'字段值',width:100},
+		           {field:'type',title:'节点类型',width:100},
+		           {field:'status',title:'状态',width:100},
+		           {field:'theClass',title:'class',width:100},
+		           {field:'url',title:'url',width:100},
+		           {field:'icon',title:'图标',width:100},
+		           {field:'action',title:'权限',width:100},
+		           {field:'isHasChild',title:'是否有子节点',width:100},
+		           {field:'talbeName',title:'子节点表名',width:100},
+		           {field:'condition',title:'查询条件',width:100}
+		       ]]
+	});
 });
+
+function doSearch(value,name){
+	if(value==""){
+		return;
+	}else{
+		var obj=new Object();
+		obj["key_"+name]=value;
+		$("#tablesId").datagrid("load",obj);
+	}
+}
+
 </script>
 <body class="easyui-layout" style="margin-left:2px;margin-top:2px" >
-	<div id="treeNodeId"  data-options="toolbar:'#tablesSearchId'"></div>
+	<div id="tableId"  data-options="toolbar:'#tablesSearchId'" style="margin-top:5px;"></div>
 	<div id="tablesSearchId" class="searchBox">
 		<a href="javascript:add()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a>
 		<a href="javascript:edit()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改</a>

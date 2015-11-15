@@ -100,7 +100,7 @@ create table `treeNode`(
 	`url` varchar(1024) DEFAULT '' ,
 	`icon` VARCHAR(64) DEFAULT '' COMMENT '权限控制代码',
 	`action` VARCHAR(64) DEFAULT '' COMMENT '权限控制代码',
-	`isHasChild` TINYINT DEFALUT 0 COMMENT '是否含有子节点，0没有，1含有',
+	`isHasChild` TINYINT DEFAULT 0 COMMENT '是否含有子节点，0没有，1含有',
 	`left` int,
 	`right` int,
 	

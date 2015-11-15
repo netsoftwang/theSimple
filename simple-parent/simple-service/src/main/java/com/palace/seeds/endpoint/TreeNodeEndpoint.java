@@ -24,13 +24,13 @@ public class TreeNodeEndpoint {
 	public @ResponseBody Result add(Map<String,Object> params){
 		return treeNodeService.add(params);
 	}
-	/*@RequestMapping("edit")
+	@RequestMapping("edit")
 	public @ResponseBody Result edit(Map<String,Object> params){
 		return  treeNodeService.edit(params);
 	}
 	
 	@RequestMapping("getPage")
 	public @ResponseBody Map<String,Object> getPage(Map<String,Object> params){
-		return treeNodeService.getPage(params);
-	}*/
+		return treeNodeService.getPage(params, null);
+	}
 }
