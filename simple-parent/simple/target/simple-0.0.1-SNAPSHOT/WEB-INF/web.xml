@@ -23,10 +23,10 @@
   <filter>
     <display-name>LogonFilter</display-name>
     <filter-name>LogonFilter</filter-name>
-    <filter-class>om.palace.seeds.filter.LogonFilter</filter-class>
+    <filter-class>com.palace.seeds.LogonFilter</filter-class>
   </filter>
   <filter-mapping>
     <filter-name>LogonFilter</filter-name>
-    <url-pattern>/LogonFilter</url-pattern>
+    <url-pattern>/*</url-pattern>
   </filter-mapping>
 </web-app>

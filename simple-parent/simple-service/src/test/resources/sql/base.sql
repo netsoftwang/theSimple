@@ -86,23 +86,26 @@ create table `role`(
 	primary key (id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
-
+/*树节点*/
 drop table if exists seeds.treeNodeCusField;
 create table `treeNodeCusField`(
-`id` bigint unsigned not null auto_increment comment '主键',
+    `id` bigint unsigned not null auto_increment comment '主键',
 	`entId` BIGINT unsigned not null 	comment '企业id',
 	`name` VARCHAR(32) NOT NULL COMMENT '字段在列中显示的中文名称',
 	`field` VARCHAR(32) NOT NULL COMMENT '在数据库中保存的字段名称',
 	`type` VARCHAR (32) NOT NULL DEFAULT 'strType' COMMENT '字段类型',
-	`tableName` VARCHAR(32) NOT NULL COMMENT '表名称',
 	`status` TINYINT DEFAULT 0 COMMENT '字段的状态，0：再用，1：关闭，',
 	`theClass`  VARCHAR(32) DEFAULT '' COMMENT '显示的样式',
-	`funcs` VARCHAR(32) DEFAULT '' COMMENT '该字段的函数处理',
+	`url` varchar(1024) DEFAULT '' ,
 	`action` VARCHAR(64) DEFAULT '' COMMENT '权限控制代码',
+	`isHasChild` TINYINT DEFALUT 0 COMMENT '是否含有子节点，0没有，1含有',
+	
+	`tableName` VARCHAR(32) NOT NULL COMMENT '子节点表名称',
+	`condition` VARCHAR(256) DEFAULT '' COMMENT '子节点加载条件',
+	
 	`createTime` int DEFAULT 0 COMMENT '创建时间',
 	primary key (id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
-
 
 /*定制表的表名称*/
 drop table if exists seeds.tables;

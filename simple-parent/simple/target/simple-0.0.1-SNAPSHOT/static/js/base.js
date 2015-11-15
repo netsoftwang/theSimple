@@ -7,3 +7,10 @@ function dateFormatter(date){
 	var s = date.getSeconds();
 	return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d)+' '+(h<10?('0'+h):h)+':'+(mi<10?('0'+mi):mi)+':'+(s<10?('0'+s):s);
 }
+
+String.prototype.trim=function(){
+    return this.replace(/(^\s*)|(\s*$)/g, "");
+ }
+function trim(str){
+	 return str.replace(/(^\s*)|(\s*$)/g, "");
+}
