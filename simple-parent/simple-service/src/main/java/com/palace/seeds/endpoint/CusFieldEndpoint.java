@@ -10,12 +10,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.palace.seeds.helper.Result;
+import com.palace.seeds.service.IBaseService;
 import com.palace.seeds.service.ICusFieldService;
 
 @Controller
 @RequestMapping("cusField")
-public class CusFieldEndpoint {
- 
+public class CusFieldEndpoint extends BaseEndpoint{
+
+	@Override
+	public IBaseService getService(){
+		return cusFieldService;
+	}
+	
 	@Resource
 	private ICusFieldService cusFieldService;
 	

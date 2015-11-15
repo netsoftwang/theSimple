@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.palace.seeds.helper.Result;
 
-public interface ICusFieldService {
+public interface ICusFieldService  extends IBaseService{
 
 	public Map getPage(Map<String, Object> params);
 

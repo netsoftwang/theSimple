@@ -17,7 +17,7 @@ import com.palace.seeds.model.CusField;
 import com.palace.seeds.model.Model;
 import com.palace.seeds.model.User;
 
-public class BaseService{
+public class BaseService implements IBaseService{
 	@Autowired
 	protected BaseDao baseDao;
 	 
