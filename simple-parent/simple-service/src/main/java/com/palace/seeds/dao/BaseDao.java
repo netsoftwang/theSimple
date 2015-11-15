@@ -18,6 +18,7 @@ import org.springframework.jdbc.support.incrementer.DB2MainframeSequenceMaxValue
 import org.springframework.stereotype.Repository;
 
 import com.jfinal.plugin.activerecord.Db;
+import com.palace.seeds.helper.ErrorCode;
 import com.palace.seeds.helper.TableConst;
 import com.palace.seeds.util.StringKit;
 
@@ -94,7 +95,11 @@ public class BaseDao implements IBaseDao{
 				Object obj=null;
 				while(rs.next())
 					obj= JdbcUtils.getResultSetValue(rs,1,returnType);
-				return (T) obj;//注意null 没有和条件匹配的结果等。
+				if(obj==null){
+					return null;
+				}else{
+					return (T) obj;//注意null 没有和条件匹配的结果等。
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -202,6 +207,35 @@ public class BaseDao implements IBaseDao{
 			showSql(sb.toString(),"");
 		return jdbcTemplate.update(sb.toString());
 	}
+	public Integer update(String tableName,String sql,String condition,Object ...params){
+		if(StringKit.isEmpety(condition))
+			return ErrorCode.error_sql_update_10001;
+		if(StringKit.isEmpety(sql))
+			return ErrorCode.error_sql_update_10002;
+		StringBuilder sb=new StringBuilder();
+		sb.append("update ").append(tableName).append(" set ").append(sql).append(" where ").append(condition);
+		String exeSql=sb.toString();
+		Connection con = DataSourceUtils.getConnection(dataSource);
+		PreparedStatement ps=null;
+		try {
+			ps= con.prepareStatement(exeSql);
+			fillArgs(ps,params);
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return -1;
+		}finally{
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			DataSourceUtils.releaseConnection(con, dataSource);
+		}
+	}
+	
+	
 	public  int updateById(String tableName,String id,Map<String,Object> map){
 		return update(tableName, map," id="+id);
 	}

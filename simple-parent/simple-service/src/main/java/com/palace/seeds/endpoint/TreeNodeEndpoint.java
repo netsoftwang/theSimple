@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.palace.seeds.helper.Result;
 import com.palace.seeds.service.ActionService;
+import com.palace.seeds.service.TreeNodeService;
 
 @Controller
 @RequestMapping("treeNode")
@@ -16,17 +17,20 @@ public class TreeNodeEndpoint {
 	
 	@Autowired
 	private ActionService actionService;
+	@Autowired
+	private TreeNodeService treeNodeService;
+	
 	@RequestMapping("add")
 	public @ResponseBody Result add(Map<String,Object> params){
-		return actionService.add(params);
+		return treeNodeService.add(params);
 	}
-	@RequestMapping("edit")
+	/*@RequestMapping("edit")
 	public @ResponseBody Result edit(Map<String,Object> params){
-		return  actionService.edit(params);
+		return  treeNodeService.edit(params);
 	}
 	
 	@RequestMapping("getPage")
 	public @ResponseBody Map<String,Object> getPage(Map<String,Object> params){
-		return actionService.getPage(params);
-	}
+		return treeNodeService.getPage(params);
+	}*/
 }

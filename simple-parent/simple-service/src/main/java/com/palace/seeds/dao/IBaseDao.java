@@ -14,5 +14,7 @@ public interface IBaseDao {
 	public Long queryForLong(String sql,Object ...args);
 	public <T> T queryForObj(String sql,Class<T> returnType , Object ...args);
 	public Integer update(String tableName,String sql,String condition);
+	public Integer update(String tableName,String sql,String condition,Object ...params);
+	//public Integer update(String tableName,String sql,String condition,Object[] params);
 	public Long save(Map<String,Object> params);
 }

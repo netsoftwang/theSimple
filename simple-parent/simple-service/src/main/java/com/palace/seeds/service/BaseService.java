@@ -16,6 +16,7 @@ import com.palace.seeds.helper.TableConst;
 import com.palace.seeds.model.CusField;
 import com.palace.seeds.model.Model;
 import com.palace.seeds.model.User;
+import com.palace.seeds.util.StringKit;
 
 public class BaseService implements IBaseService{
 	@Autowired
@@ -109,6 +110,40 @@ public class BaseService implements IBaseService{
 		 retMap.put(TableConst.ROWS, rows);
 		 return retMap;
 	}
+	
+	public String getSetSql(String fields){
+		if(StringKit.isEmpety(fields))
+			return null;
+		 return getSetSql(fields.split(","));
+	}
+	
+	public String getSetSql(String[] fieldArr){
+		StringBuilder sb=new StringBuilder();
+		for(String str:fieldArr){
+			sb.append(str).append("=?,");
+		}
+		return sb.deleteCharAt(sb.length()).toString();
+	}
+	public Object[] getParams(String fields,Map<String,Object> map){
+		String[] fieldArr= fields.split(",");
+		return getParams(fieldArr,map);
+	}
+	public Object[] getParams(String[] fieldArr,Map<String,Object> map){
+		Object[] objArr=new Object[fieldArr.length];
+		for(int i=0;i<fieldArr.length;i++){
+			objArr[i]=map.get(fieldArr[i]);
+		}
+		return objArr;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public <T> T getObj(Map<String,Object>  map,Class<T> clazz) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException{
 		T  ins= clazz.newInstance();

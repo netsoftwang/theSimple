@@ -7,14 +7,18 @@ public class TreeNode {
 	create table `treeNodeCusField`(
 	    `id` bigint unsigned not null auto_increment comment '主键',
 		`entId` BIGINT unsigned not null 	comment '企业id',
+		`parentId` BIGINT unsigned not null comment '父id',
 		`name` VARCHAR(32) NOT NULL COMMENT '字段在列中显示的中文名称',
 		`field` VARCHAR(32) NOT NULL COMMENT '在数据库中保存的字段名称',
 		`type` VARCHAR (32) NOT NULL DEFAULT 'strType' COMMENT '字段类型',
 		`status` TINYINT DEFAULT 0 COMMENT '字段的状态，0：再用，1：关闭，',
 		`theClass`  VARCHAR(32) DEFAULT '' COMMENT '显示的样式',
 		`url` varchar(1024) DEFAULT '' ,
+		`icon` VARCHAR(64) DEFAULT '' COMMENT 'icon',
 		`action` VARCHAR(64) DEFAULT '' COMMENT '权限控制代码',
 		`isHasChild` TINYINT DEFALUT 0 COMMENT '是否含有子节点，0没有，1含有',
+		`left`  int,
+		`right` int,
 		
 		`tableName` VARCHAR(32) NOT NULL COMMENT '子节点表名称',
 		`condition` VARCHAR(256) DEFAULT '' COMMENT '子节点加载条件',
@@ -27,14 +31,19 @@ public class TreeNode {
 		private Long id;
 		private Long entId;
 		//当前节点
+		private Long parentId;
 		private String name;
 		private String field;
 		private String type;
 		private Integer status;
 		private String theClass;
 		private String url;
+		private String icon;
 		private String action;//节点权限
 		private boolean isHasChild;//是否含有子节点
+		private Integer left;
+		private Integer right;
+		
 		//加载子节点
 		private String tableName;//从哪个表加载子节点
 		private String condition;//加载条件
@@ -153,4 +162,38 @@ public class TreeNode {
 		public void setCreateTime(Integer createTime) {
 			this.createTime = createTime;
 		}
+
+		public Long getParentId() {
+			return parentId;
+		}
+
+		public void setParentId(Long parentId) {
+			this.parentId = parentId;
+		}
+
+		public String getIcon() {
+			return icon;
+		}
+
+		public void setIcon(String icon) {
+			this.icon = icon;
+		}
+
+		public Integer getLeft() {
+			return left;
+		}
+
+		public void setLeft(Integer left) {
+			this.left = left;
+		}
+
+		public Integer getRight() {
+			return right;
+		}
+
+		public void setRight(Integer right) {
+			this.right = right;
+		}
+		
+		
 }

@@ -33,12 +33,14 @@ public class TreeNodeCusField {
 	private String theClass;
 	private String url;
 	private String action;//节点权限
-	private boolean isHasChild;//是否含有子节点
+	private Boolean isHasChild;//是否含有子节点
 	//加载子节点
 	private String tableName;//从哪个表加载子节点
 	private String condition;//加载条件
 	private String childType;//子节点类型
 	
+	private Integer left;
+	private Integer right;
 	private Integer createTime;
 
 	public Long getId() {
@@ -151,6 +153,30 @@ public class TreeNodeCusField {
 
 	public void setCreateTime(Integer createTime) {
 		this.createTime = createTime;
+	}
+
+	public Boolean getIsHasChild() {
+		return isHasChild;
+	}
+
+	public void setIsHasChild(Boolean isHasChild) {
+		this.isHasChild = isHasChild;
+	}
+
+	public Integer getLeft() {
+		return left;
+	}
+
+	public void setLeft(Integer left) {
+		this.left = left;
+	}
+
+	public Integer getRight() {
+		return right;
+	}
+
+	public void setRight(Integer right) {
+		this.right = right;
 	}
 	
 	
