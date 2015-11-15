@@ -31,7 +31,7 @@
 			           {field:'status',title:'状态',width:100},
 			           {field:'associate',title:'在列表中顺序',width:100}
 			       ]]
-		})
+		});
 		
 		var pager= $("#tablesId").datagrid("getPager");
 		pager.pagination("beforePageText","dddd");
@@ -133,7 +133,7 @@
 	
 </script>
 <!-- 主列表 -->
-<body class="easyui-layout">
+<body class="easyui-layout" style="margin-left:2px;margin-top:2px" >
 	<div id="tablesId"  data-options="toolbar:'#tablesSearchId'"></div>
 	<div id="tablesSearchId" class="searchBox">
 		<a href="javascript:addTable()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a>
@@ -274,7 +274,7 @@
 	}
 </script>
 	
-	<!-- 字段列表 -->
+<!--######################字段列表   一张数据库表字段的列表，以及其字段的添加修改和删除####################################################-->
 <div id="dlg" class="easyui-dialog" title="字段列表" style="width:900px;height:400px;"
     data-options="resizable:true,modal:true,closed:true">
     <div id="cusFieldId" toolbar="#cusFieldSearchId"></div>

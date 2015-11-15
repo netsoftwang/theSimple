@@ -6,162 +6,83 @@
 	<link rel="stylesheet" type="text/css" href="../css/seeds.css">
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
 </head>
 
 <style type="text/css">
-
-	.inputWL{
-		width:125px;
-		align:right
-	}
-	.inputWR{
-		width:125px;
-		align:right;
-		padding-left:20px;
-		padding-right:20px;
-	}
-	.inputAlignL{
-		 margin-left:20px;
-		 margin-right:20px;
-		 padding-left:20px;
-		 padding-right:20px;
-		 display:inline
-	}
-	
-	.inputAlignR{
-		margin-left:20px;
-		margin-right:20px;
-		display:inline
-	}
-
 </style>
 <script type="text/javascript">
-	$(function(){
-		
-		$("#treeId").datagrid({
-			url:"../../tree/getPage",
-			pagination:true,
-			nowrap:true,
-			fitColumns:true,
-			pageNumber:0,
-			toolbar: [{
-				iconCls: 'icon-add',
-				handler:"add",
-				text:'添加'
-			},'-',{
-				iconCls: 'icon-edit',
-				handler:"edit",
-				text:'编辑'
-			},'-',{
-				iconCls: 'icon-remove',
-				handler:"remove",
-				text:'删除'
-			},'-',{
-				iconCls: 'icon-remove',
-				handler:"addNode",
-				text:'添加子节点'
-			}],
-			 columns:[[
-			           {field:'entId',title:'企业id',width:100},
-			           {field:'lable',title:'树名称',width:100},
-			           {field:'name',title:'字段名称',width:100},
-			           {field:'des',title:'描述',width:100},
-			       ]]
-		})
-		
-		//$("#treeId").datagrid("");
-		
-	});
-	
-	function add(){
-		   $('#dlg').dialog('open').dialog('setTitle','编辑字段');
-           $('#fm').form('clear');
-		 
-	}
-	function edit(){
-		
-	}
-	function remove(){
-		
-	}
-	function addNode(){
-		
-	}
+$("#tablesId").datagrid({
+	url:"../../treeNode/getPage",
+	pagination:true,
+	nowrap:true,
+	fitColumns:true,
+	singleSelect:true,
+/* 	sortName:"tableNameCF",
+	sortOrder:"desc", */
+	pageNumber:0,
+	columns:[[
+	           {field:'entId',title:'企业id',width:100},
+	           {field:'name',title:'节点名称',width:100},
+	           {field:'field',title:'字段值',width:100},
+	           {field:'type',title:'节点类型',width:100},
+	           {field:'status',title:'状态',width:100},
+	           {field:'theClass',title:'class',width:100}
+	           {field:'url',title:'url',width:100},
+	           {field:'icon',title:'图标',width:100},
+	           {field:'action',title:'权限',width:100},
+	           {field:'isHasChild',title:'是否有子节点',width:100},
+	           {field:'talbeName',title:'子节点表名',width:100},
+	           {field:'condition',title:'查询条件',width:100},
+	       ]]
+});
 </script>
-<body class="easyui-layout">
-	<div id="treeId"></div>
+<body class="easyui-layout" style="margin-left:2px;margin-top:2px" >
+	<div id="treeNodeId"  data-options="toolbar:'#tablesSearchId'"></div>
+	<div id="tablesSearchId" class="searchBox">
+		<a href="javascript:add()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a>
+		<a href="javascript:edit()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改</a>
+		<a href="javascript:del()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cancel'">删除</a>
+		<input  class="easyui-searchbox"   plain="true"  data-options="prompt:'搜索内容',menu:'#mm',searcher:doSearch" style="width:250px;height:24px"></input>
+		<div id="mm">
+			<div data-options="name:'tableNameZh'">表名称</div>
+			<div data-options="name:'tableNameCF'">表字段值</div>
+		</div>
+	</div>
 </body>
-
- <div id="dlg" class="easyui-dialog" style="width:680px;height:320px;padding:5px 10px" closed="true" buttons="#dlg-buttons">
-		<form id="fm" method="post">
-			<input type="hidden" name="id" />
-			 <div>
-			   <div class="fitem inputAlignL" >
-			        <label>企业id:</label>
-			        <input class="easyui-validatebox" type="text" name="entId" data-options="required:true" />
-			    </div>
-			   <div class="fitem inputAlignR" >
-			        <label>字段显示名称:</label>
-			        <input class="easyui-validatebox" style="align:right"  type="text" name="name" data-options="validType:''" />
-			    </div>
-		    </div>
-		    <div>
-			   <div class="fitem inputAlignL">
-			        <label>字段名:</label>
-			        <input class="easyui-validatebox" type="text" name="field" data-options="required:true" />
-			    </div>
-			   <div class="fitem inputAlignR">
-			        <label>字段类型:</label>
-			        <input class="easyui-validatebox" style="align:right" type="text" name="type" data-options="required:true" />
-			    </div>
-		    </div>
-			<div>
-			    <div class="fitem inputAlignL">
-			        <label>表名称:</label>
-			        <input class="easyui-validatebox"  type="text" name="tableName" data-options="required:true" />
-			    </div>
-			   <div class="fitem inputAlignR">
-			        <label>在列表中的顺序:</label>
-			        <input class="easyui-validatebox"  type="text" name="viewNum" data-options="" />
-			    </div>
-		    </div>
- 
-		</form>
-</div>
- <div id="dlg1" class="easyui-dialog" style="width:680px;height:320px;padding:5px 10px" closed="true" buttons="#dlg-buttons">
-	<form id="fm" method="post">
-		<input type="hidden" name="id" />
-		 <div>
-		   <div class="fitem inputAlignL" >
-		        <label>企业id:</label>
-		        <input class="easyui-validatebox" type="text" name="entId" data-options="required:true" />
-		    </div>
-		   <div class="fitem inputAlignR" >
-		        <label>字段显示名称:</label>
-		        <input class="easyui-validatebox" style="align:right"  type="text" name="name" data-options="validType:''" />
-		    </div>
-	    </div>
-	    <div>
-		   <div class="fitem inputAlignL">
-		        <label>字段名:</label>
-		        <input class="easyui-validatebox" type="text" name="field" data-options="required:true" />
-		    </div>
-		   <div class="fitem inputAlignR">
-		        <label>字段类型:</label>
-		        <input class="easyui-validatebox" style="align:right" type="text" name="type" data-options="required:true" />
-		    </div>
-	    </div>
-		<div>
-		    <div class="fitem inputAlignL">
-		        <label>表名称:</label>
-		        <input class="easyui-validatebox"  type="text" name="tableName" data-options="required:true" />
-		    </div>
-		   <div class="fitem inputAlignR">
-		        <label>在列表中的顺序:</label>
-		        <input class="easyui-validatebox"  type="text" name="viewNum" data-options="" />
-		    </div>
-	    </div>
-
-	</form>
-</div>
+ <div id="tableDlg" class="easyui-dialog" title="字段列表" style="width:400px;height:200px;"
+    data-options="resizable:true,modal:true,closed:true">
+    <table width="100%" height="100%" valign="middle">
+   		 <form id="tableFormId">
+   		 <tr>
+	     	<td align="right"><label for="name">表名称:</label></td>
+	        <td><input class="easyui-textbox" id="tableNameZh" name="tableNameZh" data-options="required:true"></input></td>
+	     </tr>
+	     <tr>
+	         <td align="right"><label for="name">存储名称:</label></td>
+	         <td><input class="easyui-textbox" id="tableNameCF" name="tableNameCF" data-options="required:true"></input></td>
+	     </tr>
+	     <tr>
+	     	<td align="right"><label for="name">类型:</label></td>
+	        <td><select id="type" name="type">
+	            	<option value="1">一般表</option>
+	            	<option value="2">树状表</option>
+	            </select>
+	         </td>
+	    </tr>
+		<tr>	     
+	     	<td align="right"><label >状态:</label></td>
+	        <td><select id="status" name="status">
+	            	<option value="1">冻结</option>
+	            	<option value="2">启用</option>
+	            </select>
+	        </td>
+	     </tr>
+	     <tr>
+	     	<td align="right"><input type="button" value="确定" onclick="saveTable()"></input></td>
+	        <td><input type="button" value="取消" onclick="calcel(){$('#tableDlg').dialog('close')}"></input></td>
+	    </tr>
+	    </form>
+	   </table>
+	</div>
 </html>
