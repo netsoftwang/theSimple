@@ -68,7 +68,7 @@ create table `creadential`(
 	primary key (id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
-drop table if exists seeds.action;
+drop table if exists `seeds.action`;
 create table `action`(
 	`id` bigint unsigned not null auto_increment comment '主键',
 	`entId` BIGINT unsigned not null 	comment '企业id',
