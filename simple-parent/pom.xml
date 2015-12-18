@@ -8,6 +8,7 @@
   <modules>
   	<module>simple-utils</module>
   	<module>simple-service</module>
+  	<module>simple-http</module>
     <module>simple</module>
   </modules>
   
@@ -99,12 +100,24 @@
 			<version>2.5.4</version>
 		</dependency>
 		
+		
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.1</version>
+		</dependency>
+		
+		
 		<dependency>
 		    <groupId>org.apache.ftpserver</groupId>
 		    <artifactId>ftpserver-core</artifactId>
 		    <version>1.0.6</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>com.sun.jdmk</groupId>
+			<artifactId>jmxtools</artifactId>
+			<version>1.2</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.mina</groupId>
 			<artifactId>mina-core</artifactId>

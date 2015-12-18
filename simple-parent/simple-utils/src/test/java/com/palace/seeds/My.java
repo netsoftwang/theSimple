@@ -1,29 +1,29 @@
 package com.palace.seeds;
 
-public class MyBeanInsMBean implements MyMBean {
+public class My  implements   MyMBean{
 
-	private int age;
-	private String name;
 	@Override
 	public void printAge() {
-		System.out.println(age);
+		 System.out.println("print age");
 		
 	}
 
 	@Override
 	public void setAge(int age) {
-		this.age=age;
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void printName() {
-		System.out.println(name);
+		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void setName(String name) {
-		this.name=name;
+		// TODO Auto-generated method stub
+		
 	}
 
 }

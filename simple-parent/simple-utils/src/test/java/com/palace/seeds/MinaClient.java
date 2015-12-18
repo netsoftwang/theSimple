@@ -49,7 +49,6 @@ public class MinaClient {
 			@Override
 			public void messageSent(IoSession session, Object message) throws Exception {
 				// TODO Auto-generated method stub
-				
 			}
 			
 			@Override
@@ -80,6 +79,7 @@ public class MinaClient {
 	public void send(){
 		 
 	 WriteFuture wf = session.write(new String("dsasdf"));
+	 
 	 //
 	 
 	 
