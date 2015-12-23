@@ -8,6 +8,8 @@ import java.util.UUID;
 import javax.sql.DataSource;
 
 import org.apache.tomcat.jdbc.pool.PoolProperties;
+import org.junit.Before;
+import org.junit.Test;
 
 import com.jfinal.plugin.activerecord.Db;
 
@@ -22,6 +24,7 @@ public class MySqlTest {
 	public String getUUID(){
 		return UUID.randomUUID().toString().replace("-","");
 	}
+	@Before
 	public void  init(){
 		PoolProperties p = new PoolProperties();
 		p.setUrl("jdbc:mysql://127.0.0.1:5106/mysqltest?useUnicode=true&characterEncoding=utf8");
@@ -43,6 +46,11 @@ public class MySqlTest {
 		org.apache.tomcat.jdbc.pool.DataSource jdbcDatasources = new org.apache.tomcat.jdbc.pool.DataSource();
 		jdbcDatasources.setPoolProperties(p);
 		ds= jdbcDatasources;
+	}
+	@Test
+	public void diffrentDatabaseTest(){
+		List<Object> objList= Db.query(ds,"select * from htsaudit.cscaudit  where id <200");
+		System.out.println("dd");
 	}
 	
 	public List<String> getSqlList(){
