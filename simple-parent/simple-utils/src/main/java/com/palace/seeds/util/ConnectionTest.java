@@ -1,36 +1,54 @@
 package com.palace.seeds.util;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.UUID;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-import javax.sql.DataSource;
-
+import org.apache.log4j.Logger;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
-import org.junit.Before;
-import org.junit.Test;
-
-import com.jfinal.plugin.activerecord.Db;
 
 public class ConnectionTest {
 
+	private  Logger logger= Logger.getLogger(PropertiesKit.class);
+	private org.apache.tomcat.jdbc.pool.DataSource dataSource;
+	String  userName;
+	String  password;
+	String  driverClass;
+	String  url;
+	public void loadMsg(){
+		this.userName=PropertiesKit.getPro("mysql.userName");
+		this.password=PropertiesKit.getPro("mysql.password");
+		this.driverClass=PropertiesKit.getPro("mysql.driverClass");
+		this.url=PropertiesKit.getPro("mysql.url");
+		logger.info(" jdbc info : userName="+this.userName+",password="+this.password+",driverClass="+this.driverClass+",url="+this.url);
+	}
 	
-	DataSource ds=null;
-	private Random random = new Random(99999999);
-	public int getRandom(){
-		return random.nextInt();
-	}
-	public String getUUID(){
-		return UUID.randomUUID().toString().replace("-","");
-	}
-	@Before
 	public void  init(){
+		loadMsg();
+	}
+ 
+	public void jdbcTest(){
+		try {
+			Class.forName(this.driverClass);
+			Connection con = DriverManager.getConnection(this.url,this.userName,this.password);
+			PreparedStatement ps=  con.prepareStatement("select 1 ");
+			ResultSet res= ps.executeQuery();
+			if(res.next()){
+				System.out.println(" jdbc  resultset next is true");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void  tomcatDataSourceTest(){
 		PoolProperties p = new PoolProperties();
-		p.setUrl("jdbc:mysql://127.0.0.1:5106/mysqltest?useUnicode=true&characterEncoding=utf8");
-		p.setDriverClassName("com.mysql.jdbc.Driver");
-		p.setUsername("root");
-		p.setPassword("83150FC75274C5C5");
+		p.setUrl(this.url);
+		p.setDriverClassName(this.driverClass);
+		p.setUsername(this.userName);
+		p.setPassword(this.password);
 		p.setJmxEnabled(true);
 		p.setTestWhileIdle(false);
 		p.setTestOnBorrow(true);
@@ -43,44 +61,39 @@ public class ConnectionTest {
 		p.setLogAbandoned(true);
 		p.setRemoveAbandoned(true);
 		p.setJdbcInterceptors("org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;" + "org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
-		org.apache.tomcat.jdbc.pool.DataSource jdbcDatasources = new org.apache.tomcat.jdbc.pool.DataSource();
-		jdbcDatasources.setPoolProperties(p);
-		ds= jdbcDatasources;
-	}
-	@Test
-	public void diffrentDatabaseTest(){
-		List<Object> objList= Db.query(ds,"select * from htsaudit.cscaudit  where id <200");
-		System.out.println("dd");
-	}
-	
-	public List<String> getSqlList(){
-		List<String> list= new ArrayList<String>();
-		StringBuilder sb=null;
-		for(int i=0;i<100;i++){
-			sb=new StringBuilder();
-			sb.append("insert into dataIndex50(sip,sport,shash,dip,"
-					+ "dport,dhash,proc) values(")
-			.append("'"+getUUID()+"',").append(getRandom()).append(",'"+getUUID()+"',").append("'"+getUUID()+"',")
-			.append(getRandom()).append(",'"+getUUID()+"',").append("'"+getUUID()+"'").append(")");
-			list.add(sb.toString());
+		this.dataSource = new org.apache.tomcat.jdbc.pool.DataSource();
+		this.dataSource.setPoolProperties(p);
+		try {
+			Connection con =this.dataSource.getConnection();
+			PreparedStatement ps = con.prepareStatement("select 1 "); 
+			ResultSet res = ps.executeQuery();
+			if(res.next()){
+				System.out.println("  tomcat datasource  resultset next is true");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return list;
 	}
 	
-	public void run(){
-		Db.batch(ds,getSqlList(),getSqlList().size());
-	}
-	
+
 	public static void main(String[] args) {
-		ConnectionTest mst= new ConnectionTest();
-		mst.init();
-		for(int i=0;i<5000;i++){
-			System.out.println("number is "+i+" start");
-			mst.run();
-			System.out.println("number is "+i+" end ");
+		ConnectionTest ct = new ConnectionTest();
+		ct.loadMsg();
+		if(args.length>0){
+			if("jdbc".equals(args[0])){
+				ct.jdbcTest();
+			}else if("dataSource".equals(args[0])){
+				ct.tomcatDataSourceTest();
+			}
+		}else{
+			//ct.jdbcTest();
+			ct.tomcatDataSourceTest();
 		}
-		System.out.println(" the end ");
 	}
+	
+	
+	
 	
 }
 
