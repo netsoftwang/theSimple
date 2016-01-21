@@ -113,11 +113,11 @@
 		    <artifactId>ftpserver-core</artifactId>
 		    <version>1.0.6</version>
 		</dependency>
-		<dependency>
+<!-- 		<dependency>
 			<groupId>com.sun.jdmk</groupId>
 			<artifactId>jmxtools</artifactId>
 			<version>1.2</version>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.apache.mina</groupId>
 			<artifactId>mina-core</artifactId>
