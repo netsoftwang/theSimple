@@ -123,7 +123,8 @@ create table `viewTable`(
 `id` bigint unsigned not null auto_increment ,
 `entId` bigint unsigned not null ,
 `viewName` varchar(45) not null comment'视图名称',
-`cusFieldId` bigint unsigned not null comment '地址字段的id'
+`cusFieldId` bigint unsigned not null comment '地址字段的id',
+primary key(id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
 
