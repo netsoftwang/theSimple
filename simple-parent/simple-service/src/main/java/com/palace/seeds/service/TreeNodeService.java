@@ -40,22 +40,23 @@ public class TreeNodeService extends BaseService implements ITreeService{
 	 * @return
 	 */
 	public Result add(Map<String,Object> params){
-		Map<String,Object> parentTreeMap = treeNodeDao.findById(TableConst.TREE,MapUtils.getString(params,TableConst.ID),"left","right");
+/*		Map<String,Object> parentTreeMap = treeNodeDao.findById(TableConst.TREENODE,MapUtils.getString(params,TableConst.ID),"left","right");
 		Integer left=MapUtils.getInteger(parentTreeMap,"left");
-		Integer right=MapUtils.getInteger(parentTreeMap,"right");
-
-		treeNodeDao.update(TableConst.TREENODE," right=right+2 ", " "
+		Integer right=MapUtils.getInteger(parentTreeMap,"right")*/;
+		Integer left=0;
+		Integer right=1;
+/*		treeNodeDao.update(TableConst.TREENODE," right=right+2 ", " "
 				+ "name='"+MapUtils.getString(params,"name")
 				+" and entId= "+MapUtils.getString(params,"entId","0")
 				+" and right >="+right);
 		treeNodeDao.update(TableConst.TREENODE,"left=left+2", 
 				" name='"+MapUtils.getString(params,"name")
 				+" and entId= "+MapUtils.getString(params,"entId","0")
-				+" and left >"+left);
+				+" and left >"+left);*/
 		
 		long i=treeNodeDao.insert("insert into treeNode(entId,treeNodeParentId,treeNodeType,treeNodeName,treeNodeIcon,treeNodeAction,"
-				+ "treeNodeUrl,treeNodeTableSerial,treeNodeAttr,treeNodeCondition,treeNodeIsHasChild,left,right)"
-				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+				+ "treeNodeUrl,treeNodeTableSerial,treeNodeAttr,treeNodeCondition,treeNodeIsHasChild,`left`,`right`)"
+				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?)"
 				,MapKit.getString(params,"entId",getEntId())
 				,MapKit.getString(params,"treeNodeParentId","0")
 				,MapKit.getString(params,"treeNodeType")

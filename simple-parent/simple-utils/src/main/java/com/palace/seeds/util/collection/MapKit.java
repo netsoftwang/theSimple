@@ -8,7 +8,7 @@ public class MapKit {
 		
 		Object obj = map.get(key);
 		if(obj==null||obj.toString().isEmpty()){
-			return (String)def;
+			return ""+def;
 		}else{
 			return obj.toString();
 		}

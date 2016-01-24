@@ -80,7 +80,7 @@ public class BaseService implements IBaseService{
 		//这里应该有权限控制，管理员权限，企业权限和用户权限
 		 Long  total = baseDao.queryForLong("select count(1) from "+tableName+" where 1=1 "+getCondition(map));
 		 List<Map<String,Object>>listMap =baseDao.queryForListMap("select * from "+tableName+" where 1=1 "+getCondition(map)+getOrder(map)
-						+" limit ?,? ",Long.parseLong((String)map.get("page")),Long.parseLong((String)map.get("rows")));
+						+" limit ?,? ",Long.parseLong((String)map.get("page"))-1,Long.parseLong((String)map.get("rows")));
 		 Map<String,Object> retMap = new HashMap<String,Object>();
 		 retMap.put(TableConst.TOTAL,total);
 		 retMap.put(TableConst.ROWS, listMap);
