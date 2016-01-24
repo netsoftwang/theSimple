@@ -1,7 +1,5 @@
 package com.palace.seeds.service;
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,13 +8,12 @@ import javax.annotation.Resource;
 import org.apache.commons.collections.MapUtils;
 import org.springframework.stereotype.Service;
 
-import com.palace.seeds.dao.BaseDao;
 import com.palace.seeds.dao.ITreeDao;
 import com.palace.seeds.dao.ITreeNodeDao;
 import com.palace.seeds.helper.Result;
 import com.palace.seeds.helper.TableConst;
 import com.palace.seeds.model.TreeNode;
-import com.palace.seeds.util.StringKit;
+import com.palace.seeds.util.collection.MapKit;
 
 @Service
 public class TreeNodeService extends BaseService implements ITreeService{
@@ -55,25 +52,24 @@ public class TreeNodeService extends BaseService implements ITreeService{
 				" name='"+MapUtils.getString(params,"name")
 				+" and entId= "+MapUtils.getString(params,"entId","0")
 				+" and left >"+left);
-		long i=treeNodeDao.insert("insert into treeNode(parentId,entId,name,field,type,status,"
-				+ "theClass,url,icon,action,isHasChild,left,right,tableName,condition,createTime)"
+		
+		long i=treeNodeDao.insert("insert into treeNode(entId,treeNodeParentId,treeNodeType,treeNodeName,treeNodeIcon,treeNodeAction,"
+				+ "treeNodeUrl,treeNodeTableSerial,treeNodeAttr,treeNodeCondition,treeNodeIsHasChild,left,right)"
 				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-				,MapUtils.getString(params,"parentId","0")
-				,MapUtils.getString(params,"entId","0")
-				,MapUtils.getString(params,"name")
-				,MapUtils.getString(params,"field")
-				,MapUtils.getString(params,"type","0")
-				,MapUtils.getString(params,"status","")
-				,MapUtils.getString(params,"theClass","")
-				,MapUtils.getString(params,"url","")
-				,MapUtils.getString(params,"icon","")
-				,MapUtils.getString(params,"action","")
-				,MapUtils.getString(params,"isHasChild","")
+				,MapKit.getString(params,"entId",getEntId())
+				,MapKit.getString(params,"treeNodeParentId","0")
+				,MapKit.getString(params,"treeNodeType")
+				,MapKit.getString(params,"treeNodeName")
+				,MapKit.getString(params,"treeNodeIcon")
+				,MapKit.getString(params,"treeNodeAction","")
+				,MapKit.getString(params,"treeNodeUrl","")
+				,MapKit.getString(params,"treeNodeTableSerial")
+				,MapKit.getString(params,"treeNodeAttr")
+				,MapKit.getString(params,"treeNodeCondition","")
+				,MapKit.getString(params,"treeNodeIsHasChild","")
 				,left+1
 				,left+2
-				,MapUtils.getString(params,"tableName","")
-				,MapUtils.getString(params,"condition","")
-				,System.currentTimeMillis()/1000);
+				);
 		if(i>0)
 			return Result.succ();
 		else

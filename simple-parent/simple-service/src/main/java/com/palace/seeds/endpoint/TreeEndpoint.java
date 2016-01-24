@@ -9,6 +9,7 @@ import javax.servlet.ServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.palace.seeds.helper.Result;
@@ -32,8 +33,8 @@ public class TreeEndpoint {
 	}
 	
 	@RequestMapping("getPage")
-	public @ResponseBody String getPage(ServletRequest req){
-		return  JsonKit.mapToJson(treeService.getPage(getParams(req)));
+	public @ResponseBody Map<String,Object> getPage(@RequestParam Map<String,Object> map){
+		return treeService.getPage(map);
 	}
 	
 	public Map<String,Object> getParams(ServletRequest req){

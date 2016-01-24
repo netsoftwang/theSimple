@@ -5,6 +5,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.palace.seeds.helper.Result;
@@ -21,16 +22,16 @@ public class TreeNodeEndpoint {
 	private TreeNodeService treeNodeService;
 	
 	@RequestMapping("add")
-	public @ResponseBody Result add(Map<String,Object> params){
+	public @ResponseBody Result add(@RequestParam Map<String,Object> params){
 		return treeNodeService.add(params);
 	}
 	@RequestMapping("edit")
-	public @ResponseBody Result edit(Map<String,Object> params){
+	public @ResponseBody Result edit(@RequestParam Map<String,Object> params){
 		return  treeNodeService.edit(params);
 	}
 	
 	@RequestMapping("getPage")
-	public @ResponseBody Map<String,Object> getPage(Map<String,Object> params){
-		return treeNodeService.getPage(params, null);
+	public @ResponseBody Map<String,Object> getPage(@RequestParam Map<String,Object> params){
+		return treeNodeService.getPage(params,"treeNode");
 	}
 }

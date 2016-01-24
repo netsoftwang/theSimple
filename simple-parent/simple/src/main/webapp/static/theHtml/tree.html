@@ -1,43 +1,130 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<link rel="stylesheet" type="text/css" href="../css/easyui.css">
-	<link rel="stylesheet" type="text/css" href="../css/icon.css">
+	<link rel="stylesheet" type="text/css" href="../themes/bootstrap/easyui.css">
+	<link rel="stylesheet" type="text/css" href="../themes/bootstrap/dialog.css">
+	<link rel="stylesheet" type="text/css" href="../themes/bootstrap/tree.css">
 	<link rel="stylesheet" type="text/css" href="../css/seeds.css">
 	<script type="text/javascript" src="../js/jquery.min.js"></script>
 	<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="../js/easyui-lang-zh_CN.js"></script>
+	<script type="text/javascript" src="../js/base.js"></script>
 </head>
 
 <style type="text/css">
 </style>
 <script type="text/javascript">
 $(function(){
-	$("#tableId").datagrid({
-		url:"../../treeNode/getPage",
+	$("#tablesId").datagrid({
+		url:"../../tree/getPage",
 		pagination:true,
 		nowrap:true,
 		fitColumns:true,
 		singleSelect:true,
-	/* 	sortName:"tableNameCF",
-		sortOrder:"desc", */
 		pageNumber:0,
 		columns:[[
 		           {field:'entId',title:'企业id',width:100},
-		           {field:'name',title:'节点名称',width:100},
-		           {field:'field',title:'字段值',width:100},
-		           {field:'type',title:'节点类型',width:100},
-		           {field:'status',title:'状态',width:100},
-		           {field:'theClass',title:'class',width:100},
-		           {field:'url',title:'url',width:100},
-		           {field:'icon',title:'图标',width:100},
-		           {field:'action',title:'权限',width:100},
-		           {field:'isHasChild',title:'是否有子节点',width:100},
-		           {field:'talbeName',title:'子节点表名',width:100},
-		           {field:'condition',title:'查询条件',width:100}
-		       ]]
+		           {field:'label',title:'显示名称',width:100},
+		           {field:'name',title:'树唯一标识',width:100},
+		           {field:'des',title:'描述',width:100},
+		           {field:'field_one',title:'保留',width:100},
+		           {field:'field_two',title:'保留',width:100}
+		       ]],
+		onDblClickCell: function(index,field,value){
+			doubleClickTablesRow(this,index,field,value,null);
+   		}
 	});
 });
+
+var operation_url="";
+function addTable(){
+	operation_url="../../tree/add";
+	$("#tableDlg").dialog("open");
+}
+
+function editTable(){
+	operation_url="../../tree/edit";
+	var data = $("#tablesId").datagrid("getSelected");
+	if(data==null){
+		$.messager.alert("操作提示", "请选择要编辑的表！");
+		return;
+	}
+	obj['label']=$("#label").textbox("getValue");
+	$("#id").val(data.id);
+	$("#entId").val(data.entId);
+	$("#label").textbox("setValue",data.lable);
+	$("#name").textbox("setValue",data.name);
+	$("#des").textbox("setValue",data.des);
+	$("#field_one").textbox("setValue",data.field_one);
+	$("#field_two").textbox("setValue",data.field_two);
+	$("#tableDlg").dialog("open");
+}
+//global params
+var ctx,serial;
+function saveTable(){
+	var obj=new Object();
+	obj['id']=$("#id").val();
+	obj['entId']=$("#entId").val();
+	obj['label']=$("#label").textbox("getValue");
+	obj['name']=$("#name").textbox("getValue");
+	obj['des']=$("#des").textbox("getValue");
+	obj['field_one']=$("#field_one").textbox("getValue");
+	obj['field_two']=$("#field_two").textbox("getValue");
+	$.post(operation_url,obj,function(res){
+		if(res.code==200){
+			loadTable(ctx,serial,$("#entId").val(),$("#name").textbox("getValue"));
+			$("#tablesId").datagrid("reload");
+			msgTipSucc();
+			$("#tableDlg").dialog("close");
+		}else{	
+		 	msgTipErr();
+		}
+	});
+}
+function delTable(){
+	var data = $("#tablesId").datagrid("getSelected");
+	if(data==null){
+		$.messager.alert("操作提示", "请选择要编辑的表！");
+		return;
+	}
+}
+
+function doubleClickTablesRow(tablesThis,index,field,value){
+	ctx="";
+	serial="";
+	var data = $("#tablesId").datagrid("getSelected");
+	if(data==null){
+		$.messager.alert("操作提示", "请选择要编辑的表！");
+		return;
+	}
+	loadTable(ctx,serial,data.entId,data.name);
+
+}
+
+function loadTable(ctx,serial,entId,treeSerial){
+	var url = "../../treeNode/getPage?entId="+entId+"&key_treeNodeTableSerial="+treeSerial;
+	$("#cusFieldId").datagrid({
+		url:url,
+		pagination:true,
+		nowrap:true,
+		fitColumns:true,
+		singleSelect:true,
+		pageNumber:0,
+		columns:[[
+		           {field:'entId',title:'企业id',width:100},
+		           {field:'treeNodeParentId',title:'父节点id',width:100},
+		           {field:'treeNodeType',title:'节点类型',width:100},
+		           {field:'treeNodeName',title:'节点名称',width:100},
+		           {field:'treeNodeIcon',title:'节点图标',width:100},
+		           {field:'treeNodeAction',title:'action',width:100},
+		           {field:'treeNodeurl',title:'url',width:100},
+		           {field:'treeNodeTableSerial',title:'唯一标识',width:100},
+		           {field:'treeNodeAttr',title:'属性',width:100},
+		           {field:'treeNodeIsHasChild',title:'是否有子节点',width:100},
+		           {field:'treeNodeCondtion',title:'查询条件',width:100}
+		       ]]
+	});
+}
 
 function doSearch(value,name){
 	if(value==""){
@@ -49,53 +136,181 @@ function doSearch(value,name){
 	}
 }
 
+//-----------------------------添加节点----------------------------------------------
+function addValue(){
+	
+
+}
+
+function editValue(){
+	
+}
+function delValue(){
+	
+}
 </script>
 <body class="easyui-layout" style="margin-left:2px;margin-top:2px" >
-	<div id="tableId"  data-options="toolbar:'#tablesSearchId'" style="margin-top:5px;"></div>
-	<div id="tablesSearchId" class="searchBox">
-		<a href="javascript:add()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加</a>
-		<a href="javascript:edit()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改</a>
-		<a href="javascript:del()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-cancel'">删除</a>
-		<input  class="easyui-searchbox"   plain="true"  data-options="prompt:'搜索内容',menu:'#mm',searcher:doSearch" style="width:250px;height:24px"></input>
-		<div id="mm">
-			<div data-options="name:'tableNameZh'">表名称</div>
-			<div data-options="name:'tableNameCF'">表字段值</div>
+	<div id="treePanel" class="easyui-panel" title="树结构" style="width:100%;padding:10px;margin-bottom:30px"data-options="">
+		<!-- 用于承载表格数据 -->
+		<div id="tablesId"  data-options="toolbar:'#tablesSearchId'"></div>
+		<div id="tablesSearchId" class="" style="">
+			<a href="javascript:addTable()"  class="easyui-linkbutton" data-options="plain:true">添加</a>
+			<a href="javascript:editTable()" class="easyui-linkbutton" data-options="plain:true">修改</a>
+			<a href="javascript:delTable()" class="easyui-linkbutton" data-options="plain:true">删除</a>
+			<input  class="easyui-searchbox"   plain="true"  data-options="prompt:'搜索内容',menu:'#mm',searcher:doSearch" style="width:250px;height:24px"></input>
+			<div id="mm">
+				<div data-options="name:'tableNameZh'">表名称</div>
+				<div data-options="name:'tableNameCF'">表字段值</div>
+			</div>
+		</div>
+	</div>
+	<!-- 显示对应表中的字段信息 -->
+	<div id="fieldPanel" class="easyui-panel" title="可定制表字段" style="width:100%;padding:10px;"data-options="">
+	    <div id="cusFieldId" toolbar="#cusFieldSearchId"></div>
+    	<div id="cusFieldSearchId" class="">
+			<a href="javascript:addValue()"  class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-add'">添加字段</a>
+			<a href="javascript:editValue()" class="easyui-linkbutton" data-options="plain:true,iconCls:'icon-edit'">修改字段</a>
+			<a href="javascript:delValue()"  class="easyui-linkbutton"  data-options="plain:true,iconCls:'icon-cancel'">删除字段</a>
+			<input  class="easyui-searchbox"   plain="true"  data-options="prompt:'搜索内容',menu:'#mm',searcher:doSearch" style="width:250px;height:24px"></input>
+			<div id="mm">
+				<div data-options="name:'tableNameZh'">表名称</div>
+				<div data-options="name:'tableNameCF'">表字段值</div>
+			</div>
 		</div>
 	</div>
 </body>
- <div id="tableDlg" class="easyui-dialog" title="字段列表" style="width:400px;height:200px;"
-    data-options="resizable:true,modal:true,closed:true">
-    <table width="100%" height="100%" valign="middle">
+<!-- 添加表dlg -->
+<div id="tableDlg" class="easyui-dialog" title="树定义" style="width:450px;height:200px;"
+  		 data-options="resizable:true,modal:true,closed:true">
+   	<table width="100%" height="100%" valign="middle">
    		 <form id="tableFormId">
-   		 <tr>
-	     	<td align="right"><label for="name">表名称:</label></td>
-	        <td><input class="easyui-textbox" id="tableNameZh" name="tableNameZh" data-options="required:true"></input></td>
-	     </tr>
-	     <tr>
-	         <td align="right"><label for="name">存储名称:</label></td>
-	         <td><input class="easyui-textbox" id="tableNameCF" name="tableNameCF" data-options="required:true"></input></td>
-	     </tr>
-	     <tr>
-	     	<td align="right"><label for="name">类型:</label></td>
-	        <td><select id="type" name="type">
-	            	<option value="1">一般表</option>
-	            	<option value="2">树状表</option>
-	            </select>
-	         </td>
-	    </tr>
-		<tr>	     
-	     	<td align="right"><label >状态:</label></td>
-	        <td><select id="status" name="status">
-	            	<option value="1">冻结</option>
-	            	<option value="2">启用</option>
-	            </select>
-	        </td>
-	     </tr>
-	     <tr>
-	     	<td align="right"><input type="button" value="确定" onclick="saveTable()"></input></td>
-	        <td><input type="button" value="取消" onclick="calcel(){$('#tableDlg').dialog('close')}"></input></td>
-	    </tr>
+   		 	 <input type="hidden" id="id" name="id">
+   		 	 <input type="hidden" id="entId" name="entId">
+	   		 <tr>
+		     	<td align="right"><label for="name">表名称:</label></td>
+		        <td><input class="easyui-textbox" id="label" name="label" data-options="required:true"></input></td>
+		     </tr>
+		     <tr>
+		         <td align="right"><label for="name">表字段值:</label></td>
+		         <td><input class="easyui-textbox" id="name" name="name" data-options=""></input></td>
+		     </tr>
+		   	<tr>
+		         <td align="right"><label for="name">描述:</label></td>
+		         <td><input class="easyui-textbox" id="des" name="des" data-options=""></input></td>
+		     </tr>
+		     <tr>
+		         <td align="right"><label for="name">保留:</label></td>
+		         <td><input class="easyui-textbox" id="field_one" name=""field_one"" data-options=""></input></td>
+		     </tr>
+		     <tr>
+		         <td align="right"><label for="name">保留:</label></td>
+		         <td><input class="easyui-textbox" id=""field_two"" name="field_two" data-options=""></input></td>
+		     </tr>
+		     <tr>
+		     	<td align="right"><input type="button" value="确定" onclick="saveTable()"></input></td>
+		        <td><input type="button" value="取消" onclick="calcel(){$('#tableDlg').dialog('close')}"></input></td>
+		    </tr>
 	    </form>
-	   </table>
-	</div>
+   </table>
+</div>
+
+
+ <div id="cusFieldDlg" class="easyui-dialog" style="width:896px;height:396px;padding:5px 10px" closed="true" buttons="#dlg-buttons">
+ 	<form id="cusFieldFormId">
+ 			<input type="hidden" id="conditionId" name="conditionId"/>
+		 	<table aglign="center" width="100%" height="100%"> 
+	 			<tr>
+	 				<td><label>节点名称:</label></td>
+		 			<td><input class="easyui-textbox" id="name" name="name" data-options="required:true"/></td>
+		 			<td><label>字段值:</label></td>
+		 			<td><input class="easyui-textbox" id="field" name="field" data-options="required:true" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>节点类型:</label></td>
+		 			<td> <input class="easyui-textbox" style="align:right" id="name" name="name" data-options="validType:''" /></td>
+		 			<td><label>状态:</label></td>
+		 			<td>
+		 				<select class="easyui-combobox"  id="CFType" name="CFType" style="width:170px;">
+							    <option value="_str">字符串型</option>
+							    <option value="_int">整型</option>
+							    <option value="_long">长整型</option>
+							    <option value="_float">单精度浮点型</option>
+							    <option value="_double">双精度浮点型</option>
+							    <option value="_char">字符型</option>
+							    <option value="_byte">字节型</option>
+							    <option value="_date">日期型</option>
+							    <option value="_datetime">日期时间型</option>
+							    <option value="_time">时间型</option>
+						</select>
+					</td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>class:</label></td>
+		 			<td><input class="easyui-numberbox"  id="viewNum" name="viewNum" data-options="" /></td>
+		 			<td><label>url:</label></td>
+		 			<td><input class="easyui-textbox" id="inFormType" name="inFormType" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		  	 		<td><label>图标:</label></td>
+		 			<td><input class="easyui-textbox" id="action" name="action" data-options="" /></td>
+		 			<td> <label>权限:</label></td>
+		 			<td><input class="easyui-textbox" id="regexpForm" name="regexpForm" data-options="" /></td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>是否有子节点:</label></td>
+		 			<td><input class="easyui-numberbox" id="CFWidth" name="CFWidth" data-options="" value="25" /></td>
+					<td><label>子节点名称:</label></td>
+		 			<td><select class="easyui-combobox" id="isShow" name="isShow" style="width:170px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+		 		</tr>
+		  	 	<tr>
+		 			<td><label>查询条件:</label></td>
+		 			<td><input class="easyui-textbox" id="optionKV" name="optionKV" data-options="" /></td>
+					<td><label>是否多值搜索:</label></td>
+		 			<td> <select class="easyui-combobox" id="isMutiValSearch" name="isMutiValSearch"  style="width:170px;">
+							    <option value="1">否</option>
+							    <option value="0">是</option>
+							</select>
+					</td>
+				</tr>
+		  	 	<tr>
+					<td><label>是否用于搜索:</label></td>
+		 			<td><select class="easyui-combobox" id="isSearch" name="isSearch" style="width:170px;">
+							    <option value="1">否</option>
+							    <option value="0">是</option>
+							</select>
+					</td>
+					<td><label>搜索类型:</label></td>
+		 			<td><select class="easyui-combobox" id="searchType" name="searchType" style="width:170px;">
+							    <option value="and">和</option>
+							    <option value="or">或</option>
+							</select>
+					</td>	
+				</tr>
+		  	 	<tr>
+		  	 		<td><label>是否在用:</label></td>
+		 			<td><select class="easyui-combobox" id="isUse" name="isUse" style="width:170px;">
+							    <option value="0">是</option>
+							    <option value="1">否</option>
+							</select>
+					</td>
+		 			<td><label>状态:</label></td>
+		 			<td> <select class="easyui-combobox" id="CFStatus" name="CFStatus" style="width:170px;">
+							    <option value="0">再用</option>
+							    <option value="1">停用</option>
+							</select>
+					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td><input type="button" value="确定" onclick="saveCusForTable()" style="width:85px"/></td>
+					<td></td>
+					<td><input type="button" value="取消 " onclick="cusFieldCancel(){$('#cusFieldDlg').dialog('close')}" style="width:85px"/></td>
+				</tr>
+		 	</table>
+		</form>
+</div>
 </html>

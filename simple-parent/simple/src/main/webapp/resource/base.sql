@@ -35,13 +35,16 @@ DROP TABLE if EXISTS seeds.treeNode;
 create TABLE `treeNode`(
 `id` bigint unsigned NOT NULL auto_increment COMMENT'主键',
 `entId` bigint unsigned not null comment'企业id',
-`uniquId` bigint unsigned not null  COMMENT '类型描述',
-`parentId` bigint unsigned  COMMENT '上级节点',
-`type` TINYINT NOT NULL DEFAULT 0 COMMENT '节点的类型',
-`name` VARCHAR(32) COMMENT '名称',
-`icon` VARCHAR(32) default '' COMMENT '图标',
-`action` VARCHAR(32) COMMENT '权限',
-`url` VARCHAR(255) COMMENT '关联地址',
+`treeNodeParentId` bigint unsigned  COMMENT '上级节点',
+`treeNodeType` TINYINT NOT NULL DEFAULT 0 COMMENT '节点的类型',
+`treeNodeName` VARCHAR(32) COMMENT '名称',
+`treeNodeIcon` VARCHAR(32) default '' COMMENT '图标',
+`treeNodeAction` varchar(32) COMMENT'权限代码',
+`treeNodeUrl` VARCHAR(255) COMMENT '关联地址',
+`treeNodeTableSerial` varchar(68) NOT NULL COMMENT '树的唯一标识',
+`treeNodeAttr` varchar(128)  COMMENT '属性信息',
+`treeNodeCondition` varchar(128) COMMENT '条件代码',
+`treeNodeIsHasChild` tinyint COMMENT'是否有子节点',
 `left` INT COMMENT '左值',
 `right` INT COMMENT '右值',
 PRIMARY KEY (id) 
@@ -54,6 +57,8 @@ create TABLE `tree`(
 `label` VARCHAR(32) COMMENT'显示名称',
 `name` varchar(32) COMMENT '字段名称',
 `des` varchar(128) COMMENT '描述',
+`field_one` varchar(64) COMMENT '',
+`field_two` varchar(64) COMMENT '',
 PRIMARY KEY (id) 
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
@@ -68,7 +73,7 @@ create table `creadential`(
 	primary key (id)
 )ENGINE=INNODB DEFAULT CHARSET=utf8 auto_increment=1;
 
-drop table if exists `seeds.action`;
+drop table if exists seeds.`action`;
 create table `action`(
 	`id` bigint unsigned not null auto_increment comment '主键',
 	`entId` BIGINT unsigned not null 	comment '企业id',
@@ -89,7 +94,7 @@ create table `role`(
 
 drop table if exists seeds.treeNodeCusField;
 create table `treeNodeCusField`(
-`id` bigint unsigned not null auto_increment comment '主键',
+	`id` bigint unsigned not null auto_increment comment '主键',
 	`entId` BIGINT unsigned not null 	comment '企业id',
 	`name` VARCHAR(32) NOT NULL COMMENT '字段在列中显示的中文名称',
 	`field` VARCHAR(32) NOT NULL COMMENT '在数据库中保存的字段名称',

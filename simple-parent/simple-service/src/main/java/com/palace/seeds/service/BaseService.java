@@ -91,7 +91,7 @@ public class BaseService implements IBaseService{
 		String sql = " ";
 		for(String key : map.keySet()){
 			if(key.startsWith("key")){
-				sql+=" and "+ key.split("_")[1]+" like '%"+map.get(key+"' ");
+				sql+=" and "+ key.split("_")[1]+" like '%"+map.get(key)+"' ";
 			}
 		}
 	return sql;

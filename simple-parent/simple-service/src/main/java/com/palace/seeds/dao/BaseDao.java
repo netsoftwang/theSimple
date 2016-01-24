@@ -169,6 +169,7 @@ public class BaseDao implements IBaseDao{
 	}
 	
 	//根据插入语句执行插入动作
+	//insert into tree(entId,label,name,des,field_one,field_two) values(?,?,?,?,?,?)
 	public Long insert(String sql,Object...args){
 		Connection con=null;
 		PreparedStatement ps=null;
