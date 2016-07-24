@@ -1,15 +1,11 @@
 package com.palace.seeds;
 
-import io.netty.buffer.ByteBuf;
-
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 
-import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.service.IoHandlerAdapter;
 import org.apache.mina.core.session.IdleStatus;
@@ -25,6 +21,7 @@ public class MinaWriteTest {
 		this.acceptor=new NioSocketAcceptor();
 		this.acceptor.getFilterChain().addLast("codec", new ProtocolCodecFilter(new TextLineCodecFactory()));  
 		this.acceptor.setHandler(new IoHandler() {
+<<<<<<< HEAD
 			
 			@Override
 			public void sessionOpened(IoSession session) throws Exception {
@@ -61,6 +58,42 @@ public class MinaWriteTest {
 			public void messageReceived(IoSession session, Object message)
 					throws Exception {
 				session.write("result:"+message);
+=======
+			@Override
+			public void sessionOpened(IoSession session) throws Exception {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void sessionIdle(IoSession session, IdleStatus status)
+					throws Exception {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void sessionCreated(IoSession session) throws Exception {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void sessionClosed(IoSession session) throws Exception {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void messageSent(IoSession session, Object message) throws Exception {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void messageReceived(IoSession session, Object message)
+					throws Exception {
+>>>>>>> branch 'master' of git@github.com:netsoftwang/theSimple.git
 				// TODO Auto-generated method stub
 				
 			}
