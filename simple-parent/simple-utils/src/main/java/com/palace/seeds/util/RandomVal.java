@@ -69,4 +69,17 @@ public class RandomVal {
 		return sb3.toString();
 	}
 	
+	public static float randomFloat(int val){
+		return new Random().nextFloat()*val;
+	}
+	
+	public static int randomInt(int begin,int end){
+		Random r= new Random();
+		int tmp= r.nextInt(end);
+		if(tmp<begin){
+			 return randomInt(begin, end);
+		}
+		return  tmp;
+	}
+	
 }
