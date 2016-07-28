@@ -19,6 +19,10 @@ public class MapTest {
 
 	}
 	
+	class Test extends Thread{
+		
+	}
+	
 	
 	Map<String,User>  currMap = new ConcurrentHashMap<String,User>();
 	boolean flag=false;

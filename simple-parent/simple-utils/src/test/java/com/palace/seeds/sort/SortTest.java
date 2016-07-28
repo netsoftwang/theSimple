@@ -20,7 +20,7 @@ public class SortTest {
 		}
 		String des="";
 		for(int k=0;k<arr.length;k++)
-			des+=arr[k]+",";
+			des+=arr[k]+","; 
 		System.out.println("maoPao:"+des);
 	}
 	
