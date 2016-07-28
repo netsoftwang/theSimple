@@ -13,7 +13,6 @@ import com.palace.seeds.dao.ITreeNodeDao;
 import com.palace.seeds.helper.Result;
 import com.palace.seeds.helper.TableConst;
 import com.palace.seeds.model.TreeNode;
-import com.palace.seeds.util.collection.MapKit;
 
 @Service
 public class TreeNodeService extends BaseService implements ITreeService{
@@ -57,17 +56,17 @@ public class TreeNodeService extends BaseService implements ITreeService{
 		long i=treeNodeDao.insert("insert into treeNode(entId,treeNodeParentId,treeNodeType,treeNodeName,treeNodeIcon,treeNodeAction,"
 				+ "treeNodeUrl,treeNodeTableSerial,treeNodeAttr,treeNodeCondition,treeNodeIsHasChild,`left`,`right`)"
 				+ "values(?,?,?,?,?,?,?,?,?,?,?,?,?)"
-				,MapKit.getString(params,"entId",getEntId())
-				,MapKit.getString(params,"treeNodeParentId","0")
-				,MapKit.getString(params,"treeNodeType")
-				,MapKit.getString(params,"treeNodeName")
-				,MapKit.getString(params,"treeNodeIcon")
-				,MapKit.getString(params,"treeNodeAction","")
-				,MapKit.getString(params,"treeNodeUrl","")
-				,MapKit.getString(params,"treeNodeTableSerial")
-				,MapKit.getString(params,"treeNodeAttr")
-				,MapKit.getString(params,"treeNodeCondition","")
-				,MapKit.getString(params,"treeNodeIsHasChild","")
+				,MapUtils.getString(params,"entId",getEntId()+"")
+				,MapUtils.getString(params,"treeNodeParentId","0")
+				,MapUtils.getString(params,"treeNodeType")
+				,MapUtils.getString(params,"treeNodeName")
+				,MapUtils.getString(params,"treeNodeIcon")
+				,MapUtils.getString(params,"treeNodeAction","")
+				,MapUtils.getString(params,"treeNodeUrl","")
+				,MapUtils.getString(params,"treeNodeTableSerial")
+				,MapUtils.getString(params,"treeNodeAttr")
+				,MapUtils.getString(params,"treeNodeCondition","")
+				,MapUtils.getString(params,"treeNodeIsHasChild","")
 				,left+1
 				,left+2
 				);
