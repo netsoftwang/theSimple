@@ -10,7 +10,6 @@
   <artifactId>simple</artifactId>
   <packaging>war</packaging>
   <dependencies>
-  
 	  <dependency>
 		        <groupId>com.palace.seeds</groupId>
 		        <artifactId>simple-utils</artifactId>

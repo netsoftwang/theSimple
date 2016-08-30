@@ -6,7 +6,7 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>simple-utils</artifactId>
-  
+  <packaging>jar</packaging>
   <dependencies>
   	  <dependency>    
 		<groupId>com.jfinal</groupId>    
