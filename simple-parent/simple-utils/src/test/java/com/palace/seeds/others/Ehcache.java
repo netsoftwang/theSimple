@@ -1,4 +1,4 @@
-package com.palace.seeds;
+package com.palace.seeds.others;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;

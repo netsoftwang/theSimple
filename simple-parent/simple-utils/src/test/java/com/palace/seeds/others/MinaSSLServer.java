@@ -1,4 +1,4 @@
-package com.palace.seeds;
+package com.palace.seeds.others;
 
 import org.apache.mina.core.service.IoHandler;
 import org.apache.mina.core.session.IdleStatus;

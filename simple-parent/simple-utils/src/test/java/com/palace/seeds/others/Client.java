@@ -1,4 +1,4 @@
-package com.palace.seeds;
+package com.palace.seeds.others;
 
 import java.io.BufferedReader;
 import java.io.IOException;

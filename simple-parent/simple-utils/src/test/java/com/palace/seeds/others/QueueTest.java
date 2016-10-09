@@ -1,4 +1,4 @@
-package com.palace.seeds;
+package com.palace.seeds.others;
 
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.locks.ReentrantLock;

@@ -1,4 +1,4 @@
-package com.palace.seeds;
+package com.palace.seeds.others;
 
 public interface MyMBean {
 

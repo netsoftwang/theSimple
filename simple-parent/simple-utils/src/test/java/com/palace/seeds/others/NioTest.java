@@ -1,4 +1,4 @@
-package com.palace.seeds;
+package com.palace.seeds.others;
 
 import java.io.IOException;
 import java.net.ServerSocket;
